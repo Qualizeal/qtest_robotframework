@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 6.1 (Python 3.10.6 on win32)" generated="20260106 17:01:24.791" rpa="false" schemaversion="4">
+<suite id="s1" name="Robot Interactive Console" source="c:\Users\Saravanan Subramani\.vscode\extensions\robocorp.robotframework-lsp-1.13.0\src\robotframework_ls\vendored\robotframework_interactive\robot_interactive_console.robot">
+<test id="s1-t1" name="Default Task/Test" line="5">
+<kw name="Interpreter Main Loop" library="MainLoop">
+<kw name="Initialize QTest Manager">
+<arg>${CONFIG_PATH}</arg>
+<msg timestamp="20260106 17:01:26.105" level="FAIL">No keyword with name 'Initialize QTest Manager' found.</msg>
+<status status="FAIL" starttime="20260106 17:01:26.105" endtime="20260106 17:01:26.105"/>
+</kw>
+<kw name="Create QTest Test Run">
+<var>${run_id}</var>
+<arg>name=Simple Test Run</arg>
+<arg>test_case_ids=56168926</arg>
+<status status="NOT RUN" starttime="20260106 17:01:26.106" endtime="20260106 17:01:26.106"/>
+</kw>
+<kw name="Set Test Variable" library="BuiltIn">
+<arg>${TEST_RUN_ID}</arg>
+<arg>${run_id}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<status status="NOT RUN" starttime="20260106 17:01:26.106" endtime="20260106 17:01:26.106"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>Executing test logic</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="NOT RUN" starttime="20260106 17:01:26.106" endtime="20260106 17:01:26.106"/>
+</kw>
+<kw name="Set Variable" library="BuiltIn">
+<var>${result}</var>
+<arg>PASSED</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" starttime="20260106 17:01:26.106" endtime="20260106 17:01:26.106"/>
+</kw>
+<kw name="Report QTest Result">
+<arg>test_run_id=${TEST_RUN_ID}</arg>
+<arg>test_case_id=${TEST_CASE_ID}</arg>
+<arg>status=${result}</arg>
+<arg>message=Test completed successfully</arg>
+<arg>execution_time=1500</arg>
+<status status="NOT RUN" starttime="20260106 17:01:26.108" endtime="20260106 17:01:26.108"/>
+</kw>
+<kw name="Finalize QTest Run">
+<status status="NOT RUN" starttime="20260106 17:01:26.111" endtime="20260106 17:01:26.111"/>
+</kw>
+<status status="PASS" starttime="20260106 17:01:24.840" endtime="20260106 17:01:29.053"/>
+</kw>
+<status status="PASS" starttime="20260106 17:01:24.840" endtime="20260106 17:01:29.053"/>
+</test>
+<status status="PASS" starttime="20260106 17:01:24.807" endtime="20260106 17:01:29.055"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="Robot Interactive Console">Robot Interactive Console</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
