@@ -525,10 +525,15 @@ class QTestRobotLibrary:
         status_name = str(result).strip().upper()
         if not status_name:
             raise ValueError("Result/status must be provided for step log")
-
+        statusname_ids={
+            'PASSED': 601,
+            'FAILED': 602,
+            'SKIPPED': 603,
+            'BLOCKED': 604
+        }
         payload: Dict = {
-            'order': order,
-            'status': status_name,
+            # 'order': order,
+            'status': { 'id': statusname_ids.get(status_name, 0), 'name': status_name },
             'actual_result': actual_result or ""
         }
         if expected_result is not None:
@@ -543,7 +548,7 @@ class QTestRobotLibrary:
                 if testcaseid:
                     step_id = self.manager.get_test_step_id_by_order(int(testcaseid), order)
                     if step_id is not None:
-                        payload['id'] = int(step_id)
+                        payload['test_step_id'] = int(step_id)
         except Exception as e:
             logger.debug(f"Could not resolve qTest step id for order {order}: {e}")
 
