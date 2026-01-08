@@ -205,7 +205,7 @@ class QTestManager:
             test_log_data['exe_start_date'] = exe_start_date
         if exe_end_date:
             test_log_data['exe_end_date'] = exe_end_date
-        # test_log_data['test_step_logs'] = steplogs['logs']
+        test_log_data['test_step_logs'] = steplogs['logs']
         try:
             result = self.api.add_test_log(test_run_id, test_log_data)
             self.logger.info(f"Test result updated successfully. Test log ID: {result.get('id')}")
@@ -437,3 +437,36 @@ class QTestManager:
         run_id = created.get('id')
         self.logger.info(f"Created new test run {run_id} for test case {test_case_id}")
         return int(run_id)
+
+    # -------- Test step helpers --------
+    def get_test_step_id_by_order(self, test_case_id: int, step_number: int) -> Optional[int]:
+        """
+        Return the test step ID for the given test case by step order/number.
+        """
+        self.logger.debug(f"Resolving step id for test case {test_case_id} order {step_number}")
+        try:
+            return self.api.find_test_step_id_by_order(int(test_case_id), int(step_number))
+        except Exception as e:
+            self.logger.error(f"Failed to get step id for case {test_case_id} order {step_number}: {e}")
+            return None
+
+    def get_test_step_id_by_name(self, test_case_id: int, step_name: str) -> Optional[int]:
+        """
+        Return the test step ID by matching name/description fields.
+        Matches against 'name', 'description', or 'action' fields case-insensitively.
+        """
+        try:
+            steps = self.api.get_test_steps(int(test_case_id)) or []
+            target = str(step_name).strip().lower()
+            for s in steps:
+                candidates = [
+                    str(s.get('name', '')).strip().lower(),
+                    str(s.get('description', '')).strip().lower(),
+                    str(s.get('action', '')).strip().lower(),
+                ]
+                if target and target in candidates:
+                    return s.get('id')
+            return None
+        except Exception as e:
+            self.logger.error(f"Failed to get step id by name for case {test_case_id}: {e}")
+            return None

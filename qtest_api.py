@@ -133,6 +133,38 @@ class QTestAPI:
     def get_test_logs(self, test_run_id: int) -> List[Dict]:
         """Get all test logs for a test run"""
         return self._make_request('GET', f'test-runs/{test_run_id}/test-logs')
+
+    def get_test_steps(self, test_case_id: int) -> List[Dict]:
+        """
+        Get all test steps for a given test case.
+        Endpoint (typical): GET /api/v3/projects/{projectId}/test-cases/{testCaseId}/test-steps
+        Returns a list or an object with 'items'; normalize to a list.
+        """
+        data = self._make_request('GET', f'test-cases/{test_case_id}/test-steps')
+        if isinstance(data, dict) and 'items' in data:
+            return data.get('items', [])
+        if isinstance(data, list):
+            return data
+        return []
+
+    def find_test_step_id_by_order(self, test_case_id: int, step_number: int) -> Optional[int]:
+        """
+        Find a test step ID by its order/index within the test case.
+        Tries common keys: order, index, sequence, position.
+        """
+        steps = self.get_test_steps(test_case_id) or []
+        for s in steps:
+            order = s.get('order') or s.get('index') or s.get('sequence') or s.get('position')
+            if order is None:
+                continue
+            try:
+                if int(order) == int(step_number):
+                    return s.get('id')
+            except Exception:
+                # fallback to string equality
+                if str(order).strip() == str(step_number).strip():
+                    return s.get('id')
+        return None
     
     def get_field_settings(self) -> List[Dict]:
         """Get project field settings"""

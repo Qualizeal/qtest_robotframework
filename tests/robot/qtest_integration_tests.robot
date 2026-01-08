@@ -24,9 +24,9 @@ Sample Case 2
     Log    Starting login test with valid credentials
     ${result}=    Simulate Login Test    valid_user    valid_password
     Should Be Equal    ${result}    success
-    ${STEP_LOGS}=    Append QTest Test Step Log    ${STEP_LOGS}    1    PASSED    Actual ok    Expected ok    Step ran fine
+    ${STEP_LOGS}=    Append QTest Test Step Log    ${TEST_CASE_ID}    ${STEP_LOGS}    1    PASSED    Actual ok    Expected ok    Step ran fine
     Log    Login test passed successfully
-    ${STEP_LOGS}=    Append QTest Test Step Log    ${STEP_LOGS}    2    PASSED    Actual ok    Expected ok    Step ran fine
+    ${STEP_LOGS}=    Append QTest Test Step Log    ${TEST_CASE_ID}    ${STEP_LOGS}    2    PASSED    Actual ok    Expected ok    Step ran fine
 
 *** Keywords ***
 Setup QTest Integration
@@ -44,6 +44,10 @@ Setup QTest Integration
     
     Set Suite Variable    ${TEST_RUN_ID}    ${test_run_id}
     Log    Test Run Created - ID: ${test_run_id}
+    # Resolve and store the current test's qTest case ID for reuse in this test
+    ${test_case_id}=    Get QTest Test Case ID    ${TEST_NAME}
+    Set Test Variable    ${TEST_CASE_ID}    ${test_case_id}
+    Log    Test Case ID - ${TEST_CASE_ID}
 
 Log Test Start
     [Documentation]    Log the start of each test
@@ -61,11 +65,11 @@ Report Test Result
     
     Log    Reporting result to QTest: ${status}
     
-    ${test_case_id}=    Get QTest Test Case ID    ${TEST_NAME}
+    # ${test_case_id}=    Get QTest Test Case ID    ${TEST_NAME}
     
     Report QTest Result
     ...    test_run_id=${TEST_RUN_ID}
-    ...    test_case_id=${test_case_id}
+    ...    test_case_id=${TEST_CASE_ID}
     ...    status=${status}
     ...    steplogs=${STEP_LOGS}
     ...    message=${message}
