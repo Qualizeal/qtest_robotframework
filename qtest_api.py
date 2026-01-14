@@ -35,9 +35,12 @@ class QTestAPI:
         }
         self.logger = logging.getLogger(__name__)
         
+    def encode_file(self,filelocation):
+        file_rb=open(filelocation, 'rb')
+        return file_rb
 
     def _make_request(self, method: str, endpoint: str, data: Optional[Dict] = None, 
-                     params: Optional[Dict] = None) -> Optional[Dict]:
+                     params: Optional[Dict] = None, headers: Optional[Dict] = None) -> Optional[Dict]:
         """
         Make HTTP request to QTest API
         
@@ -50,6 +53,13 @@ class QTestAPI:
         Returns:
             Response data as dictionary or None
         """
+        if headers is None:
+            headers = self.headers
+        else:
+            # Merge with default headers
+            merged_headers = self.headers.copy()
+            merged_headers.update(headers)
+            self.headers = merged_headers
         url = f"{self.base_url}/api/v3/projects/{self.project_id}/{endpoint}"
         
         try:
@@ -58,7 +68,10 @@ class QTestAPI:
             if method.upper() == 'GET':
                 response = requests.get(url, headers=self.headers, params=params)
             elif method.upper() == 'POST':
-                response = requests.post(url, headers=self.headers, json=data, params=params)
+                try:
+                    response = requests.post(url, headers=self.headers, json=data, params=params)
+                except Exception as e:
+                    response = requests.post(url, headers=self.headers, data=data, params=params)
             elif method.upper() == 'PUT':
                 response = requests.put(url, headers=self.headers, json=data, params=params)
             elif method.upper() == 'DELETE':
@@ -302,3 +315,32 @@ class QTestAPI:
         except Exception as e:
             self.logger.error(f"Failed to find test cycle by name '{name}': {e}")
             return None
+
+    def create_attachment(self, testlogid,fileDict) -> Dict:
+        
+        # """
+        # Create an attachment for a given entity (test-case, test-run, test-log, etc.)
+        
+        # Args:
+        #     file_path: Path to the file to attach
+        #     entity_type: Type of entity (e.g., 'test-cases', 'test-runs', 'test-logs')
+        #     entity_id: ID of the entity"""
+        # filenameUp=eachfile+".jpg"
+        # headers = {'Content-Type': 'application/jpeg', 'Authorization': authorization_token,"Connection": "keep-alive",
+        # "File-Name": filenameUp,"Accept": "*/*","Accept-Encoding": "gzip, deflate, br"}
+        # request_url = self.url + "/api/v3/projects/" + str(projectid) + "/test-logs/" + str(testlogid) + "/blob-handles"
+        for eachdict in fileDict:
+            filename = eachdict['file_name']
+            try:
+                splitfilename=filename.split('\\')[-1]
+            except Exception as e:
+                self.logger.error(f"Error splitting filename: {e}")
+                splitfilename = filename
+            filename_withStep= f"Step{eachdict.get('stepnumber','')}_{splitfilename}"
+
+            headers = {'Content-Type': 'application/jpeg', "Connection": "keep-alive",
+                    "File-Name": filename_withStep,"Accept": "*/*","Accept-Encoding": "gzip, deflate, br"}
+            
+            encodedFileContents=self.encode_file(filename)
+            endpoint='test-logs/' + str(testlogid) + '/blob-handles'
+            self._make_request('POST', endpoint, data=encodedFileContents, headers=headers)

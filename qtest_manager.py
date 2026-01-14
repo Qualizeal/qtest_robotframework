@@ -6,7 +6,7 @@ High-level manager for QTest operations
 import json
 import logging
 from typing import Dict, List, Optional, Union
-
+import os
 from qtest_api import QTestAPI
 
 
@@ -209,6 +209,14 @@ class QTestManager:
         try:
             result = self.api.add_test_log(test_run_id, test_log_data)
             self.logger.info(f"Test result updated successfully. Test log ID: {result.get('id')}")
+            attachementdict=[]
+            for indexnum,steplog in enumerate(steplogs['logs']):
+                if 'attachment' in steplog:
+                        tempattachdict={}
+                        tempattachdict['file_name']=steplog['attachment']
+                        tempattachdict["stepnumber"]=indexnum+1
+                        attachementdict.append(tempattachdict)
+            self.api.create_attachment(result.get('id'),attachementdict)
             return result
         except Exception as e:
             self.logger.error(f"Failed to update test result: {str(e)}")

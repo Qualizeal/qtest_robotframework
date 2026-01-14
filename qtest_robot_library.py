@@ -499,7 +499,8 @@ class QTestRobotLibrary:
     def create_qtest_test_step_log(self, testcaseid, step_number, result: str,
                                    actual_result: str = "",
                                    expected_result: Optional[str] = None,
-                                   description: Optional[str] = None) -> Dict:
+                                   description: Optional[str] = None,
+                                   attachment: Optional[str] = None) -> Dict:
         """
         Create a JSON-serializable dictionary for a qTest test step log by passing step number and result.
 
@@ -551,7 +552,8 @@ class QTestRobotLibrary:
                         payload['test_step_id'] = int(step_id)
         except Exception as e:
             logger.debug(f"Could not resolve qTest step id for order {order}: {e}")
-
+        if attachment:
+            payload['attachment'] = attachment
         logger.debug(f"Created test step log payload: {payload}")
         return payload
 
@@ -560,7 +562,8 @@ class QTestRobotLibrary:
                                    result: str,
                                    actual_result: str = "",
                                    expected_result: Optional[str] = None,
-                                   description: Optional[str] = None):
+                                   description: Optional[str] = None,
+                                   attachment: Optional[str] = None):
         """
         Append a qTest test step log into the provided container (list or dict with 'logs') and return it.
         """
@@ -570,7 +573,8 @@ class QTestRobotLibrary:
             result=result,
             actual_result=actual_result,
             expected_result=expected_result,
-            description=description
+            description=description,
+            attachment=attachment
         )
         if container is None or container == "":
             return [step]
@@ -637,5 +641,5 @@ def approve_qtest_test_case(test_case) -> int:
 def create_qtest_test_step_log(step_number, result: str, actual_result: str = "", expected_result: Optional[str] = None, description: Optional[str] = None) -> Dict:
     return _LIB.create_qtest_test_step_log(step_number, result, actual_result, expected_result, description)
 
-def append_qtest_test_step_log(testcaseid,container, step_number, result: str, actual_result: str = "", expected_result: Optional[str] = None, description: Optional[str] = None):
-    return _LIB.append_qtest_test_step_log(testcaseid, container, step_number, result, actual_result, expected_result, description)
+def append_qtest_test_step_log(testcaseid,container, step_number, result: str, actual_result: str = "", expected_result: Optional[str] = None, description: Optional[str] = None, attachment: Optional[str] = None):
+    return _LIB.append_qtest_test_step_log(testcaseid, container, step_number, result, actual_result, expected_result, description, attachment)

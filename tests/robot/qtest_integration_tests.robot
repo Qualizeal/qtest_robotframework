@@ -4,10 +4,18 @@ Documentation     QTest Integration Test Suite
 Library           Collections
 Library           DateTime
 Library           ../../qtest_robot_library.py
+Resource          ../../keywords/common_keywords.robot
+Resource          ../../object_files/login.resource
+Resource          ../../object_files/dashboard.resource
+Resource          ../../object_files/settings_page.resource
+Resource          ../../object_files/clients.resource
+Resource          ../../object_files/client_environment.resource
 
 # Suite Setup       Setup QTest Integration
 Suite Teardown    Finalize QTest Test Run
-Test Setup        Run Keywords    Setup QTest Integration    AND    Log Test Start
+Test Setup        Run Keywords    Read Env And Set Credentials    ${EXECDIR}${/}.env    
+...    AND    Setup QTest Integration    AND    Log Test Start    
+...    AND    Login To Application    ${url}    ${username}    ${password}
 Test Teardown     Report Test Result 
 
 *** Variables ***
@@ -17,17 +25,59 @@ ${TEST_RUN_NAME}        Robot Framework Test Run -
 @{TEST_CASE_NAME}        Sample Case 2
 
 *** Test Cases ***
-# Admin-Dashboard-Dashboard Client's Page
 Sample Case 2
     [Documentation]    Test login functionality with valid credentials
     [Tags]    login    smoke    critical
-    Log    Starting login test with valid credentials
-    ${result}=    Simulate Login Test    valid_user    valid_password
-    Should Be Equal    ${result}    success
-    ${STEP_LOGS}=    Append QTest Test Step Log    ${TEST_CASE_ID}    ${STEP_LOGS}    1    PASSED    Actual ok    Expected ok    Step ran fine
-    Log    Login test passed successfully
-    ${STEP_LOGS}=    Append QTest Test Step Log    ${TEST_CASE_ID}    ${STEP_LOGS}    2    PASSED    Actual ok    Expected ok    Step ran fine
+    
+    # ${PAGETITLE}=    Get Title
+    # ${STEP_LOGS}=    ADD STEP LOG TO QTEST    ${TEST_CASE_ID}    ${STEP_LOGS}    1    PASSED    ${PAGETITLE}    Expected ok    Step ran fine
+    # ${STEP_LOGS}=    ADD STEP LOG TO QTEST    ${TEST_CASE_ID}    ${STEP_LOGS}    2    PASSED    ${PAGETITLE}    Expected ok    Step ran fine
+    Wait Until Element Is Visible    ${WELCOME_BACK_HEADER}    ${MAX_TIMEOUT}
+    Wait Until Element Is Visible  ${WELCOME_BACK_SEARCH_INPUT}   ${MAX_TIMEOUT}
+    Input Text    ${WELCOME_BACK_SEARCH_INPUT}    cardinal
+    Press Keys    None    ENTER
 
+
+    ${CLIENT_NAMEOBJ}=    FORMAT String    ${CLIENT_NAME}  Cardinal
+    Wait Until Element Is Visible    ${CLIENT_NAMEOBJ}    ${MAX_TIMEOUT}
+    Click Element     ${CLIENT_NAMEOBJ}
+    Wait Until Element Is Visible    ${CLIENT_ENVIRONMENT_ACTION_BUTTON}    ${MAX_TIMEOUT}
+    Click Element    ${CLIENT_ENVIRONMENT_ACTION_BUTTON}
+    Sleep    ${MID_TIMEOUT}
+   
+    Wait Until Element Is Visible    ${CLIENT_ENVIRONMENT_AUTH_LINK}   ${AUTH_TIMEOUT}
+    
+    Click Element    ${CLIENT_ENVIRONMENT_AUTH_LINK}
+    Wait Until Element Is Visible    ${CLIENT_ENVIRONMENT_LOGIN_REASON_INPUT}    ${MAX_TIMEOUT}
+    Input Text    ${CLIENT_ENVIRONMENT_LOGIN_REASON_INPUT}    Testing login access
+
+    Wait Until Element Is Visible    ${CLIENT_ENVIRONMENT_ADMINISTRATOR_BUTTON}    ${MAX_TIMEOUT}
+    Scroll Element Into View    ${CLIENT_ENVIRONMENT_ADMINISTRATOR_BUTTON}
+    Set Focus To Element    ${CLIENT_ENVIRONMENT_ADMINISTRATOR_BUTTON}
+    Click Element    ${CLIENT_ENVIRONMENT_ADMINISTRATOR_BUTTON}
+    
+    Wait Until Keyword Succeeds    ${MAX_TIMEOUT}    500ms 
+    ...    Switch Window    title=Rimsys
+
+    ${PAGETITLE}    Get Title
+    ${STEP_LOGS}=    ADD STEP LOG TO QTEST    ${TEST_CASE_ID}    ${STEP_LOGS}    1    PASSED    ${PAGETITLE}    Expected ok    Step ran fine
+
+    Wait Until Element Is Visible    ${PROFILEBUTTON}    ${MAX_TIMEOUT}
+    Sleep    ${DEFAULT_TIMEOUT}
+    Scroll Element Into View    ${PROFILEBUTTON}
+    Set Focus To Element    ${PROFILEBUTTON}
+    Click Element    ${PROFILEBUTTON}
+    
+    Wait Until Element Is Visible    ${SETTINGS_LINK}    ${MAX_TIMEOUT}
+    Click Element    ${SETTINGS_LINK}
+
+    Wait Until Element Is Visible    ${LABEL_ALIASES_LINK}           ${MAX_TIMEOUT}
+    Click Element    ${LABEL_ALIASES_LINK}
+    Wait Until Element Is Visible    ${LABEL_ALIASES_SEARCH_INPUT}        ${MAX_TIMEOUT}
+    Input Text    ${LABEL_ALIASES_SEARCH_INPUT}        legal
+    Press Keys    ${LABEL_ALIASES_SEARCH_INPUT}        ENTER
+    ${STEP_LOGS}=    ADD STEP LOG TO QTEST    ${TEST_CASE_ID}    ${STEP_LOGS}    2    PASSED    ${PAGETITLE}    Expected ok    Step ran fine
+    
 *** Keywords ***
 Setup QTest Integration
     [Documentation]    Initialize QTest integration and create test run
