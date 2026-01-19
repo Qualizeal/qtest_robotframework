@@ -1,0 +1,7 @@
+{
+  "qtest_url": "https://rimsys.qtestnet.com",
+  "api_token": "Bearer f198e3a4-e9c5-4ed6-b1dc-596200e4164f",
+  "project_id": 115899,
+  "default_test_cycle_id": null,
+  "log_level": "INFO"
+}
