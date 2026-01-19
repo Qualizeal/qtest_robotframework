@@ -22,29 +22,45 @@ Test Teardown     Report Test Result
 ${QTEST_CONFIG}         ${EXECDIR}${/}config.json
 ${TEST_CYCLE_NAME}        TestDemo
 ${TEST_RUN_NAME}        Robot Framework Test Run -
-@{TEST_CASE_NAME}        Sample Case 2
+# @{TEST_CASE_NAME}        Validate that Admin user is able to navigate to the required page and search Label Aliases
 
 *** Test Cases ***
-Sample Case 2
+Validate that Admin user is able to navigate to the required page and search Label Aliases
     [Documentation]    Test login functionality with valid credentials
     [Tags]    login    smoke    critical
+    Welcome Page Should Be Loaded
+    Choose Client     Cardinal
+    Open Settings and Label Aliases
+    validate Label Aliases page
+    Enter Legal search criteria and validate results    legal
+
+Validate that Admin user is able to navigate to the required page and search Read-only Fields
+    [Documentation]    Test login functionality with valid credentials
+    [Tags]    login    smoke    critical
+    Welcome Page Should Be Loaded
+    Choose Client     Cardinal
+    # Open Settings and Readonly Aliases
+    # validate Readonly Aliases page
+    # Enter Read only criteria and validate results    read_only
     
-    # ${PAGETITLE}=    Get Title
-    # ${STEP_LOGS}=    ADD STEP LOG TO QTEST    ${TEST_CASE_ID}    ${STEP_LOGS}    1    PASSED    ${PAGETITLE}    Expected ok    Step ran fine
-    # ${STEP_LOGS}=    ADD STEP LOG TO QTEST    ${TEST_CASE_ID}    ${STEP_LOGS}    2    PASSED    ${PAGETITLE}    Expected ok    Step ran fine
+*** Keywords ***
+Welcome Page Should Be Loaded
+    [Documentation]    Verify that the welcome page is loaded
     Wait Until Element Is Visible    ${WELCOME_BACK_HEADER}    ${MAX_TIMEOUT}
     Wait Until Element Is Visible  ${WELCOME_BACK_SEARCH_INPUT}   ${MAX_TIMEOUT}
     Input Text    ${WELCOME_BACK_SEARCH_INPUT}    cardinal
     Press Keys    None    ENTER
 
-
-    ${CLIENT_NAMEOBJ}=    FORMAT String    ${CLIENT_NAME}  Cardinal
+Choose Client
+    [Arguments]    ${CLIENT_NAME_PARAM}  
+    ${CLIENT_NAMEOBJ}=    FORMAT String    ${CLIENT_NAME}      ${CLIENT_NAME_PARAM} 
     Wait Until Element Is Visible    ${CLIENT_NAMEOBJ}    ${MAX_TIMEOUT}
     Click Element     ${CLIENT_NAMEOBJ}
     Wait Until Element Is Visible    ${CLIENT_ENVIRONMENT_ACTION_BUTTON}    ${MAX_TIMEOUT}
     Click Element    ${CLIENT_ENVIRONMENT_ACTION_BUTTON}
     Sleep    ${MID_TIMEOUT}
-   
+    Select Environment and client admin login
+Select Environment and client admin login
     Wait Until Element Is Visible    ${CLIENT_ENVIRONMENT_AUTH_LINK}   ${AUTH_TIMEOUT}
     
     Click Element    ${CLIENT_ENVIRONMENT_AUTH_LINK}
@@ -61,7 +77,8 @@ Sample Case 2
 
     ${PAGETITLE}    Get Title
     ${STEP_LOGS}=    ADD STEP LOG TO QTEST    ${TEST_CASE_ID}    ${STEP_LOGS}    1    PASSED    ${PAGETITLE}    Expected ok    Step ran fine
-
+    RETURN  ${PAGETITLE}
+Open Settings and Label Aliases
     Wait Until Element Is Visible    ${PROFILEBUTTON}    ${MAX_TIMEOUT}
     Sleep    ${DEFAULT_TIMEOUT}
     Scroll Element Into View    ${PROFILEBUTTON}
@@ -71,14 +88,38 @@ Sample Case 2
     Wait Until Element Is Visible    ${SETTINGS_LINK}    ${MAX_TIMEOUT}
     Click Element    ${SETTINGS_LINK}
 
+Open Settings and Readonly Aliases
+    Wait Until Element Is Visible    ${PROFILEBUTTON}    ${MAX_TIMEOUT}
+    Sleep    ${DEFAULT_TIMEOUT}
+    Scroll Element Into View    ${PROFILEBUTTON}
+    Set Focus To Element    ${PROFILEBUTTON}
+    Click Element    ${PROFILEBUTTON}
+    
+    Wait Until Element Is Visible    ${SETTINGS_LINK}    ${MAX_TIMEOUT}
+    Click Element    ${SETTINGS_LINK}
+
+validate Label Aliases page
     Wait Until Element Is Visible    ${LABEL_ALIASES_LINK}           ${MAX_TIMEOUT}
     Click Element    ${LABEL_ALIASES_LINK}
     Wait Until Element Is Visible    ${LABEL_ALIASES_SEARCH_INPUT}        ${MAX_TIMEOUT}
-    Input Text    ${LABEL_ALIASES_SEARCH_INPUT}        legal
+
+validate Readonly Aliases page
+    Wait Until Element Is Visible    ${LABEL_ALIASES_LINK}           ${MAX_TIMEOUT}
+    Click Element    ${LABEL_ALIASES_LINK}
+    Wait Until Element Is Visible    ${LABEL_ALIASES_SEARCH_INPUT}        ${MAX_TIMEOUT}
+Enter Legal search criteria and validate results
+    [Arguments]    ${searchcriteria}
+    Input Text    ${LABEL_ALIASES_SEARCH_INPUT}        ${searchcriteria}
+    ${STEP_LOGS}=    ADD STEP LOG TO QTEST    ${TEST_CASE_ID}    ${STEP_LOGS}    2    PASSED    PASSED    Expected ok    Step ran fine
     Press Keys    ${LABEL_ALIASES_SEARCH_INPUT}        ENTER
-    ${STEP_LOGS}=    ADD STEP LOG TO QTEST    ${TEST_CASE_ID}    ${STEP_LOGS}    2    PASSED    ${PAGETITLE}    Expected ok    Step ran fine
-    
-*** Keywords ***
+    ${STEP_LOGS}=    ADD STEP LOG TO QTEST    ${TEST_CASE_ID}    ${STEP_LOGS}    3    PASSED    PASSED    Expected ok    Step ran fine
+
+Enter Read only criteria and validate results
+    [Arguments]    ${searchcriteria}
+    Input Text    ${LABEL_ALIASES_SEARCH_INPUT}        ${searchcriteria}
+    Press Keys    ${LABEL_ALIASES_SEARCH_INPUT}        ENTER
+    ${STEP_LOGS}=    ADD STEP LOG TO QTEST    ${TEST_CASE_ID}    ${STEP_LOGS}    2    PASSED    PASSED    Expected ok    Step ran fine
+
 Setup QTest Integration
     [Documentation]    Initialize QTest integration and create test run
     ${date}=    Get Current Date    result_format=%Y-%m-%d %H:%M
@@ -89,7 +130,7 @@ Setup QTest Integration
     Log    Creating test run in QTest
     ${test_run_id}=    Create Qtest Test Run   
     ...    name=${TEST_RUN_NAME}  
-    ...    test_case_name=${TEST_CASE_NAME}   
+    ...    test_case_name=${TEST NAME}  
     ...    test_cycle_name=${TEST_CYCLE_NAME}
     
     Set Suite Variable    ${TEST_RUN_ID}    ${test_run_id}

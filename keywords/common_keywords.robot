@@ -46,11 +46,33 @@ Read Env And Set Credentials
     Set Suite Variable    ${url}         ${env.APP_URL}
     Set Suite Variable    ${username}    ${env.APP_USERNAME}
     Set Suite Variable    ${password}    ${env.APP_PASSWORD}
+    Set Suite Variable    ${headless}    ${env.HEADLESS}
 
 Login To Application
     [Documentation]    Open the application and perform login using locators from login.robot.
     [Arguments]    ${url}    ${username}    ${password}
-    Open Browser    ${url}    ${BROWSER}
+    ${CHROME_BINARY}=    Set Variable    C:\\Application\\chrome.exe
+    ${CHROME_DRIVER}=    Set Variable    C:\\chrome-win64\\chromedriver.exe
+
+   ${options}=    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys
+    
+    # Enable headless mode if the variable is set to True
+    IF    '${headless}' == 'True'
+        Call Method    ${options}    add_argument    --headless
+        Call Method    ${options}    add_argument    --window-size\=1920,1080
+        # These flags help stability on both Windows and Linux
+        Call Method    ${options}    add_argument    --disable-gpu
+        Call Method    ${options}    add_argument    --no-sandbox
+        Call Method    ${options}    add_argument    --disable-dev-shm-usage
+    END
+
+    # Create Webdriver using default paths
+    Create Webdriver    ${BROWSER}    options=${options}
+    Go To    ${url}
+
+    # Open Browser    ${url}    ${BROWSER}
+
+    
     Maximize Browser Window
     Sleep    ${DEFAULT_TIMEOUT}
     Wait Until Element Is Visible    ${AZURE_LOGIN_BUTTON}    ${MID_TIMEOUT}
