@@ -35,7 +35,6 @@ ENV/
 
 # Configuration
 config.json
-.env
 
 # Logs
 *.log
