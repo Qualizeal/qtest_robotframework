@@ -54,8 +54,8 @@ Login To Application
     # ${CHROME_BINARY}=    Set Variable    C:/Application/chrome.exe
     # ${CHROME_DRIVER}=    Set Variable    C:/chrome-win64/chromedriver.exe
     
-    ${CHROME_BINARY}=    /usr/bin/google-chrome
-    ${CHROME_DRIVER}=    /usr/local/bin/chromedriver
+    ${CHROME_BINARY}=    Set Variable    /usr/bin/google-chrome
+    ${CHROME_DRIVER}=    Set Variable    /usr/local/bin/chromedriver
 
     ${options}=    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys
     ${options.binary_location}=    Set Variable    ${CHROME_BINARY}
