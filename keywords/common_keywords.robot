@@ -51,23 +51,34 @@ Read Env And Set Credentials
 Login To Application
     [Documentation]    Open the application and perform login using locators from login.robot.
     [Arguments]    ${url}    ${username}    ${password}
-    ${CHROME_BINARY}=    Set Variable    C:\\Application\\chrome.exe
-    ${CHROME_DRIVER}=    Set Variable    C:\\chrome-win64\\chromedriver.exe
-
-   ${options}=    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys
+    # ${CHROME_BINARY}=    Set Variable    C:/Application/chrome.exe
+    # ${CHROME_DRIVER}=    Set Variable    C:/chrome-win64/chromedriver.exe
     
+    ${CHROME_BINARY}=    /usr/bin/google-chrome
+    ${CHROME_DRIVER}=    /usr/local/bin/chromedriver
+
+    ${options}=    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys
+    ${options.binary_location}=    Set Variable    ${CHROME_BINARY}
+
+    # --- ADD THIS LINE ---
+    # This tells Selenium where the actual Chrome browser is installed
+    Set Variable If    '${CHROME_BINARY}' != '${None}'    Set Property    ${options}    binary_location    ${CHROME_BINARY}
+    # ---------------------
     # Enable headless mode if the variable is set to True
     IF    '${headless}' == 'True'
         Call Method    ${options}    add_argument    --headless
         Call Method    ${options}    add_argument    --window-size\=1920,1080
         # These flags help stability on both Windows and Linux
         Call Method    ${options}    add_argument    --disable-gpu
-        Call Method    ${options}    add_argument    --no-sandbox
-        Call Method    ${options}    add_argument    --disable-dev-shm-usage
+        
     END
-
+    Call Method    ${options}    add_argument    --no-sandbox
+    Call Method    ${options}    add_argument    --disable-dev-shm-usage
     # Create Webdriver using default paths
-    Create Webdriver    ${BROWSER}    options=${options}
+    ${service}=    Evaluate
+    ...    sys.modules['selenium.webdriver.chrome.service'].Service('${CHROME_DRIVER}')
+    ...    sys
+    Create Webdriver    ${BROWSER}    options=${options}    service=${service}
     Go To    ${url}
 
     # Open Browser    ${url}    ${BROWSER}
@@ -120,4 +131,4 @@ ADD STEP LOG TO QTEST
     # Append step log, including attachment if present
     ${step_logs}=    Append QTest Test Step Log    ${test_case_id}    ${step_logs}    ${step_number}    ${status}    ${actual}    ${expected}    ${comments}    ${attachment}
     
-    [Return]    ${step_logs}
+    RETURN    ${step_logs}

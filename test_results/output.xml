@@ -1,0 +1,3125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.4.1 (Python 3.10.6 on win32)" generated="2026-01-20T13:47:18.593627" rpa="false" schemaversion="5">
+<suite id="s1" name="Qtest Integration Tests" source="D:\QZ_onedrive_dontDelete\OneDrive - QualiZeal\rimsys_qtest\tests\robot\qtest_integration_tests.robot">
+<test id="s1-t1" name="Validate that Admin user is able to navigate to the required page and search Label Aliases" line="27">
+<kw name="Run Keywords" owner="BuiltIn" type="SETUP">
+<kw name="Read Env And Set Credentials" owner="common_keywords">
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="File Should Exist" owner="OperatingSystem">
+<msg time="2026-01-20T13:47:20.440132" level="INFO" html="true">File '&lt;a href="file://D:\QZ_onedrive_dontDelete\OneDrive - QualiZeal\rimsys_qtest\.env"&gt;D:\QZ_onedrive_dontDelete\OneDrive - QualiZeal\rimsys_qtest\.env&lt;/a&gt;' exists.</msg>
+<arg>${env_path}</arg>
+<doc>Fails unless the given ``path`` points to an existing file.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.439147" elapsed="0.000985"/>
+</kw>
+<msg time="2026-01-20T13:47:20.440132" level="INFO">${exists} = True</msg>
+<var>${exists}</var>
+<arg>File Should Exist</arg>
+<arg>${env_path}</arg>
+<doc>Runs the specified keyword and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.439147" elapsed="0.000985"/>
+</kw>
+<if>
+<branch type="IF" condition="${exists}">
+<kw name="Get File" owner="OperatingSystem">
+<msg time="2026-01-20T13:47:20.440132" level="INFO" html="true">Getting file '&lt;a href="file://D:\QZ_onedrive_dontDelete\OneDrive - QualiZeal\rimsys_qtest\.env"&gt;D:\QZ_onedrive_dontDelete\OneDrive - QualiZeal\rimsys_qtest\.env&lt;/a&gt;'.</msg>
+<msg time="2026-01-20T13:47:20.442161" level="INFO">${content} = # QTest Configuration
+QTEST_URL=https://rimsys.qtestnet.com
+QTEST_API_TOKEN=Bearer f198e3a4-e9c5-4ed6-b1dc-596200e4164f
+QTEST_PROJECT_ID=115899
+APP_URL=https://rimcentral5.rimsys.io
+APP_USERNAME=santo...</msg>
+<var>${content}</var>
+<arg>${env_path}</arg>
+<doc>Returns the contents of a specified file.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.440132" elapsed="0.002029"/>
+</kw>
+<kw name="Split To Lines" owner="String">
+<msg time="2026-01-20T13:47:20.443173" level="INFO">8 lines returned.</msg>
+<msg time="2026-01-20T13:47:20.443173" level="INFO">${lines} = ['# QTest Configuration', 'QTEST_URL=https://rimsys.qtestnet.com', 'QTEST_API_TOKEN=Bearer f198e3a4-e9c5-4ed6-b1dc-596200e4164f', 'QTEST_PROJECT_ID=115899', 'APP_URL=https://rimcentral5.rimsys.io', 'A...</msg>
+<var>${lines}</var>
+<arg>${content}</arg>
+<doc>Splits the given string to lines.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.442161" elapsed="0.001012"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-01-20T13:47:20.444183" level="INFO">${env} = {}</msg>
+<var>${env}</var>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.443173" elapsed="0.001010"/>
+</kw>
+<for flavor="IN">
+<iter>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:47:20.445169" level="INFO">${stripped} = # QTest Configuration</msg>
+<var>${stripped}</var>
+<arg>${line}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.444183" elapsed="0.000986"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>'${stripped}' == ''</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.445169" elapsed="0.000000"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2026-01-20T13:47:20.445169" level="INFO">${firstchar} = #</msg>
+<var>${firstchar}</var>
+<arg>${stripped}</arg>
+<arg>0</arg>
+<arg>1</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.445169" elapsed="0.001078"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<msg time="2026-01-20T13:47:20.446247" level="INFO">Continuing for loop from the next iteration.</msg>
+<arg>'${firstchar}' == '#'</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.446247" elapsed="0.000000"/>
+</kw>
+<kw name="Split String" owner="String">
+<var>${parts}</var>
+<arg>${stripped}</arg>
+<arg>=</arg>
+<arg>1</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<status status="NOT RUN" start="2026-01-20T13:47:20.446247" elapsed="0.000000"/>
+</kw>
+<kw name="Get Length" owner="BuiltIn">
+<var>${plen}</var>
+<arg>${parts}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<status status="NOT RUN" start="2026-01-20T13:47:20.446247" elapsed="0.000000"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>${plen} &lt; 2</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="NOT RUN" start="2026-01-20T13:47:20.446247" elapsed="0.000000"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<var>${key}</var>
+<arg>${parts}</arg>
+<arg>0</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="NOT RUN" start="2026-01-20T13:47:20.447248" elapsed="0.000000"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<var>${val}</var>
+<arg>${parts}</arg>
+<arg>1</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="NOT RUN" start="2026-01-20T13:47:20.447248" elapsed="0.000000"/>
+</kw>
+<kw name="Strip String" owner="String">
+<var>${key}</var>
+<arg>${key}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="NOT RUN" start="2026-01-20T13:47:20.447248" elapsed="0.000000"/>
+</kw>
+<kw name="Strip String" owner="String">
+<var>${val}</var>
+<arg>${val}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="NOT RUN" start="2026-01-20T13:47:20.447248" elapsed="0.000000"/>
+</kw>
+<kw name="Set Environment Variable" owner="OperatingSystem">
+<arg>${key}</arg>
+<arg>${val}</arg>
+<doc>Sets an environment variable to a specified value.</doc>
+<status status="NOT RUN" start="2026-01-20T13:47:20.447248" elapsed="0.000000"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${env}</arg>
+<arg>${key}</arg>
+<arg>${val}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="NOT RUN" start="2026-01-20T13:47:20.447248" elapsed="0.000000"/>
+</kw>
+<var name="${line}"># QTest Configuration</var>
+<status status="PASS" start="2026-01-20T13:47:20.444183" elapsed="0.003065"/>
+</iter>
+<iter>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:47:20.448247" level="INFO">${stripped} = QTEST_URL=https://rimsys.qtestnet.com</msg>
+<var>${stripped}</var>
+<arg>${line}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.448247" elapsed="0.000000"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>'${stripped}' == ''</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.448247" elapsed="0.000000"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2026-01-20T13:47:20.449249" level="INFO">${firstchar} = Q</msg>
+<var>${firstchar}</var>
+<arg>${stripped}</arg>
+<arg>0</arg>
+<arg>1</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.448247" elapsed="0.001002"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>'${firstchar}' == '#'</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.449249" elapsed="0.000000"/>
+</kw>
+<kw name="Split String" owner="String">
+<msg time="2026-01-20T13:47:20.450247" level="INFO">${parts} = ['QTEST_URL', 'https://rimsys.qtestnet.com']</msg>
+<var>${parts}</var>
+<arg>${stripped}</arg>
+<arg>=</arg>
+<arg>1</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.449249" elapsed="0.000998"/>
+</kw>
+<kw name="Get Length" owner="BuiltIn">
+<msg time="2026-01-20T13:47:20.450247" level="INFO">Length is 2.</msg>
+<msg time="2026-01-20T13:47:20.450247" level="INFO">${plen} = 2</msg>
+<var>${plen}</var>
+<arg>${parts}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.450247" elapsed="0.000000"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>${plen} &lt; 2</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.450247" elapsed="0.001003"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2026-01-20T13:47:20.451250" level="INFO">${key} = QTEST_URL</msg>
+<var>${key}</var>
+<arg>${parts}</arg>
+<arg>0</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.451250" elapsed="0.000000"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2026-01-20T13:47:20.451250" level="INFO">${val} = https://rimsys.qtestnet.com</msg>
+<var>${val}</var>
+<arg>${parts}</arg>
+<arg>1</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.451250" elapsed="0.000000"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:47:20.452341" level="INFO">${key} = QTEST_URL</msg>
+<var>${key}</var>
+<arg>${key}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.451250" elapsed="0.001091"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:47:20.452341" level="INFO">${val} = https://rimsys.qtestnet.com</msg>
+<var>${val}</var>
+<arg>${val}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.452341" elapsed="0.000000"/>
+</kw>
+<kw name="Set Environment Variable" owner="OperatingSystem">
+<msg time="2026-01-20T13:47:20.452341" level="INFO">Environment variable 'QTEST_URL' set to value 'https://rimsys.qtestnet.com'.</msg>
+<arg>${key}</arg>
+<arg>${val}</arg>
+<doc>Sets an environment variable to a specified value.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.452341" elapsed="0.000916"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${env}</arg>
+<arg>${key}</arg>
+<arg>${val}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.453257" elapsed="0.000000"/>
+</kw>
+<var name="${line}">QTEST_URL=https://rimsys.qtestnet.com</var>
+<status status="PASS" start="2026-01-20T13:47:20.448247" elapsed="0.005010"/>
+</iter>
+<iter>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:47:20.454337" level="INFO">${stripped} = QTEST_API_TOKEN=Bearer f198e3a4-e9c5-4ed6-b1dc-596200e4164f</msg>
+<var>${stripped}</var>
+<arg>${line}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.453257" elapsed="0.001080"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>'${stripped}' == ''</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.454337" elapsed="0.000000"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2026-01-20T13:47:20.454337" level="INFO">${firstchar} = Q</msg>
+<var>${firstchar}</var>
+<arg>${stripped}</arg>
+<arg>0</arg>
+<arg>1</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.454337" elapsed="0.000000"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>'${firstchar}' == '#'</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.455332" elapsed="0.000000"/>
+</kw>
+<kw name="Split String" owner="String">
+<msg time="2026-01-20T13:47:20.455332" level="INFO">${parts} = ['QTEST_API_TOKEN', 'Bearer f198e3a4-e9c5-4ed6-b1dc-596200e4164f']</msg>
+<var>${parts}</var>
+<arg>${stripped}</arg>
+<arg>=</arg>
+<arg>1</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.455332" elapsed="0.000000"/>
+</kw>
+<kw name="Get Length" owner="BuiltIn">
+<msg time="2026-01-20T13:47:20.456348" level="INFO">Length is 2.</msg>
+<msg time="2026-01-20T13:47:20.456348" level="INFO">${plen} = 2</msg>
+<var>${plen}</var>
+<arg>${parts}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.455332" elapsed="0.001016"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>${plen} &lt; 2</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.456348" elapsed="0.000000"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2026-01-20T13:47:20.457334" level="INFO">${key} = QTEST_API_TOKEN</msg>
+<var>${key}</var>
+<arg>${parts}</arg>
+<arg>0</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.456348" elapsed="0.000986"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2026-01-20T13:47:20.457334" level="INFO">${val} = Bearer f198e3a4-e9c5-4ed6-b1dc-596200e4164f</msg>
+<var>${val}</var>
+<arg>${parts}</arg>
+<arg>1</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.457334" elapsed="0.000000"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:47:20.457334" level="INFO">${key} = QTEST_API_TOKEN</msg>
+<var>${key}</var>
+<arg>${key}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.457334" elapsed="0.000000"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:47:20.458341" level="INFO">${val} = Bearer f198e3a4-e9c5-4ed6-b1dc-596200e4164f</msg>
+<var>${val}</var>
+<arg>${val}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.457334" elapsed="0.001007"/>
+</kw>
+<kw name="Set Environment Variable" owner="OperatingSystem">
+<msg time="2026-01-20T13:47:20.458341" level="INFO">Environment variable 'QTEST_API_TOKEN' set to value 'Bearer f198e3a4-e9c5-4ed6-b1dc-596200e4164f'.</msg>
+<arg>${key}</arg>
+<arg>${val}</arg>
+<doc>Sets an environment variable to a specified value.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.458341" elapsed="0.000000"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${env}</arg>
+<arg>${key}</arg>
+<arg>${val}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.458341" elapsed="0.000000"/>
+</kw>
+<var name="${line}">QTEST_API_TOKEN=Bearer f198e3a4-e9c5-4ed6-b1dc-596200e4164f</var>
+<status status="PASS" start="2026-01-20T13:47:20.453257" elapsed="0.005084"/>
+</iter>
+<iter>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:47:20.459293" level="INFO">${stripped} = QTEST_PROJECT_ID=115899</msg>
+<var>${stripped}</var>
+<arg>${line}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.459293" elapsed="0.000000"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>'${stripped}' == ''</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.459293" elapsed="0.000965"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2026-01-20T13:47:20.460258" level="INFO">${firstchar} = Q</msg>
+<var>${firstchar}</var>
+<arg>${stripped}</arg>
+<arg>0</arg>
+<arg>1</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.460258" elapsed="0.000000"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>'${firstchar}' == '#'</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.460258" elapsed="0.001049"/>
+</kw>
+<kw name="Split String" owner="String">
+<msg time="2026-01-20T13:47:20.461307" level="INFO">${parts} = ['QTEST_PROJECT_ID', '115899']</msg>
+<var>${parts}</var>
+<arg>${stripped}</arg>
+<arg>=</arg>
+<arg>1</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.461307" elapsed="0.000000"/>
+</kw>
+<kw name="Get Length" owner="BuiltIn">
+<msg time="2026-01-20T13:47:20.462348" level="INFO">Length is 2.</msg>
+<msg time="2026-01-20T13:47:20.462348" level="INFO">${plen} = 2</msg>
+<var>${plen}</var>
+<arg>${parts}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.461307" elapsed="0.001041"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>${plen} &lt; 2</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.462348" elapsed="0.000000"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2026-01-20T13:47:20.463337" level="INFO">${key} = QTEST_PROJECT_ID</msg>
+<var>${key}</var>
+<arg>${parts}</arg>
+<arg>0</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.462348" elapsed="0.000989"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2026-01-20T13:47:20.463337" level="INFO">${val} = 115899</msg>
+<var>${val}</var>
+<arg>${parts}</arg>
+<arg>1</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.463337" elapsed="0.001010"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:47:20.464347" level="INFO">${key} = QTEST_PROJECT_ID</msg>
+<var>${key}</var>
+<arg>${key}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.464347" elapsed="0.000000"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:47:20.464347" level="INFO">${val} = 115899</msg>
+<var>${val}</var>
+<arg>${val}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.464347" elapsed="0.000000"/>
+</kw>
+<kw name="Set Environment Variable" owner="OperatingSystem">
+<msg time="2026-01-20T13:47:20.465340" level="INFO">Environment variable 'QTEST_PROJECT_ID' set to value '115899'.</msg>
+<arg>${key}</arg>
+<arg>${val}</arg>
+<doc>Sets an environment variable to a specified value.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.464347" elapsed="0.000993"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${env}</arg>
+<arg>${key}</arg>
+<arg>${val}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.465340" elapsed="0.000000"/>
+</kw>
+<var name="${line}">QTEST_PROJECT_ID=115899</var>
+<status status="PASS" start="2026-01-20T13:47:20.459293" elapsed="0.006047"/>
+</iter>
+<iter>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:47:20.465340" level="INFO">${stripped} = APP_URL=https://rimcentral5.rimsys.io</msg>
+<var>${stripped}</var>
+<arg>${line}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.465340" elapsed="0.000000"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>'${stripped}' == ''</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.465340" elapsed="0.000000"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2026-01-20T13:47:20.466932" level="INFO">${firstchar} = A</msg>
+<var>${firstchar}</var>
+<arg>${stripped}</arg>
+<arg>0</arg>
+<arg>1</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.465340" elapsed="0.001592"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>'${firstchar}' == '#'</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.466932" elapsed="0.000000"/>
+</kw>
+<kw name="Split String" owner="String">
+<msg time="2026-01-20T13:47:20.468020" level="INFO">${parts} = ['APP_URL', 'https://rimcentral5.rimsys.io']</msg>
+<var>${parts}</var>
+<arg>${stripped}</arg>
+<arg>=</arg>
+<arg>1</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.466932" elapsed="0.001088"/>
+</kw>
+<kw name="Get Length" owner="BuiltIn">
+<msg time="2026-01-20T13:47:20.468020" level="INFO">Length is 2.</msg>
+<msg time="2026-01-20T13:47:20.468020" level="INFO">${plen} = 2</msg>
+<var>${plen}</var>
+<arg>${parts}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.468020" elapsed="0.000000"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>${plen} &lt; 2</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.468020" elapsed="0.000918"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2026-01-20T13:47:20.468938" level="INFO">${key} = APP_URL</msg>
+<var>${key}</var>
+<arg>${parts}</arg>
+<arg>0</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.468938" elapsed="0.000000"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2026-01-20T13:47:20.468938" level="INFO">${val} = https://rimcentral5.rimsys.io</msg>
+<var>${val}</var>
+<arg>${parts}</arg>
+<arg>1</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.468938" elapsed="0.000000"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:47:20.470032" level="INFO">${key} = APP_URL</msg>
+<var>${key}</var>
+<arg>${key}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.468938" elapsed="0.001094"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:47:20.470032" level="INFO">${val} = https://rimcentral5.rimsys.io</msg>
+<var>${val}</var>
+<arg>${val}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.470032" elapsed="0.000000"/>
+</kw>
+<kw name="Set Environment Variable" owner="OperatingSystem">
+<msg time="2026-01-20T13:47:20.470032" level="INFO">Environment variable 'APP_URL' set to value 'https://rimcentral5.rimsys.io'.</msg>
+<arg>${key}</arg>
+<arg>${val}</arg>
+<doc>Sets an environment variable to a specified value.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.470032" elapsed="0.000000"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${env}</arg>
+<arg>${key}</arg>
+<arg>${val}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.471020" elapsed="0.000000"/>
+</kw>
+<var name="${line}">APP_URL=https://rimcentral5.rimsys.io</var>
+<status status="PASS" start="2026-01-20T13:47:20.465340" elapsed="0.005680"/>
+</iter>
+<iter>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:47:20.471020" level="INFO">${stripped} = APP_USERNAME=santosh.mangalapalli@rimsys.io</msg>
+<var>${stripped}</var>
+<arg>${line}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.471020" elapsed="0.000000"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>'${stripped}' == ''</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.472024" elapsed="0.000000"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2026-01-20T13:47:20.472024" level="INFO">${firstchar} = A</msg>
+<var>${firstchar}</var>
+<arg>${stripped}</arg>
+<arg>0</arg>
+<arg>1</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.472024" elapsed="0.000000"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>'${firstchar}' == '#'</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.472024" elapsed="0.000996"/>
+</kw>
+<kw name="Split String" owner="String">
+<msg time="2026-01-20T13:47:20.473020" level="INFO">${parts} = ['APP_USERNAME', 'santosh.mangalapalli@rimsys.io']</msg>
+<var>${parts}</var>
+<arg>${stripped}</arg>
+<arg>=</arg>
+<arg>1</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.473020" elapsed="0.000000"/>
+</kw>
+<kw name="Get Length" owner="BuiltIn">
+<msg time="2026-01-20T13:47:20.474019" level="INFO">Length is 2.</msg>
+<msg time="2026-01-20T13:47:20.474019" level="INFO">${plen} = 2</msg>
+<var>${plen}</var>
+<arg>${parts}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.473020" elapsed="0.000999"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>${plen} &lt; 2</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.474019" elapsed="0.000000"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2026-01-20T13:47:20.474019" level="INFO">${key} = APP_USERNAME</msg>
+<var>${key}</var>
+<arg>${parts}</arg>
+<arg>0</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.474019" elapsed="0.000000"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2026-01-20T13:47:20.475020" level="INFO">${val} = santosh.mangalapalli@rimsys.io</msg>
+<var>${val}</var>
+<arg>${parts}</arg>
+<arg>1</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.475020" elapsed="0.000000"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:47:20.475020" level="INFO">${key} = APP_USERNAME</msg>
+<var>${key}</var>
+<arg>${key}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.475020" elapsed="0.000000"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:47:20.475020" level="INFO">${val} = santosh.mangalapalli@rimsys.io</msg>
+<var>${val}</var>
+<arg>${val}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.475020" elapsed="0.000000"/>
+</kw>
+<kw name="Set Environment Variable" owner="OperatingSystem">
+<msg time="2026-01-20T13:47:20.475938" level="INFO">Environment variable 'APP_USERNAME' set to value 'santosh.mangalapalli@rimsys.io'.</msg>
+<arg>${key}</arg>
+<arg>${val}</arg>
+<doc>Sets an environment variable to a specified value.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.475938" elapsed="0.000000"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${env}</arg>
+<arg>${key}</arg>
+<arg>${val}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.475938" elapsed="0.000000"/>
+</kw>
+<var name="${line}">APP_USERNAME=santosh.mangalapalli@rimsys.io</var>
+<status status="PASS" start="2026-01-20T13:47:20.471020" elapsed="0.004918"/>
+</iter>
+<iter>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:47:20.476948" level="INFO">${stripped} = APP_PASSWORD=Merc5@udi9Jag7</msg>
+<var>${stripped}</var>
+<arg>${line}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.476948" elapsed="0.000000"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>'${stripped}' == ''</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.476948" elapsed="0.001086"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2026-01-20T13:47:20.478034" level="INFO">${firstchar} = A</msg>
+<var>${firstchar}</var>
+<arg>${stripped}</arg>
+<arg>0</arg>
+<arg>1</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.478034" elapsed="0.000000"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>'${firstchar}' == '#'</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.478034" elapsed="0.000000"/>
+</kw>
+<kw name="Split String" owner="String">
+<msg time="2026-01-20T13:47:20.479023" level="INFO">${parts} = ['APP_PASSWORD', 'Merc5@udi9Jag7']</msg>
+<var>${parts}</var>
+<arg>${stripped}</arg>
+<arg>=</arg>
+<arg>1</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.479023" elapsed="0.000000"/>
+</kw>
+<kw name="Get Length" owner="BuiltIn">
+<msg time="2026-01-20T13:47:20.479023" level="INFO">Length is 2.</msg>
+<msg time="2026-01-20T13:47:20.479023" level="INFO">${plen} = 2</msg>
+<var>${plen}</var>
+<arg>${parts}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.479023" elapsed="0.000000"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>${plen} &lt; 2</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.480023" elapsed="0.000000"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2026-01-20T13:47:20.480023" level="INFO">${key} = APP_PASSWORD</msg>
+<var>${key}</var>
+<arg>${parts}</arg>
+<arg>0</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.480023" elapsed="0.000000"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2026-01-20T13:47:20.481024" level="INFO">${val} = Merc5@udi9Jag7</msg>
+<var>${val}</var>
+<arg>${parts}</arg>
+<arg>1</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.480023" elapsed="0.001001"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:47:20.481024" level="INFO">${key} = APP_PASSWORD</msg>
+<var>${key}</var>
+<arg>${key}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.481024" elapsed="0.000000"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:47:20.481024" level="INFO">${val} = Merc5@udi9Jag7</msg>
+<var>${val}</var>
+<arg>${val}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.481024" elapsed="0.000000"/>
+</kw>
+<kw name="Set Environment Variable" owner="OperatingSystem">
+<msg time="2026-01-20T13:47:20.481024" level="INFO">Environment variable 'APP_PASSWORD' set to value 'Merc5@udi9Jag7'.</msg>
+<arg>${key}</arg>
+<arg>${val}</arg>
+<doc>Sets an environment variable to a specified value.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.481024" elapsed="0.000997"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${env}</arg>
+<arg>${key}</arg>
+<arg>${val}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.482021" elapsed="0.000000"/>
+</kw>
+<var name="${line}">APP_PASSWORD=Merc5@udi9Jag7</var>
+<status status="PASS" start="2026-01-20T13:47:20.476948" elapsed="0.005073"/>
+</iter>
+<iter>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:47:20.482021" level="INFO">${stripped} = HEADLESS=True</msg>
+<var>${stripped}</var>
+<arg>${line}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.482021" elapsed="0.000000"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>'${stripped}' == ''</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.483020" elapsed="0.000000"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2026-01-20T13:47:20.483020" level="INFO">${firstchar} = H</msg>
+<var>${firstchar}</var>
+<arg>${stripped}</arg>
+<arg>0</arg>
+<arg>1</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.483020" elapsed="0.000000"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>'${firstchar}' == '#'</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.484021" elapsed="0.000000"/>
+</kw>
+<kw name="Split String" owner="String">
+<msg time="2026-01-20T13:47:20.484021" level="INFO">${parts} = ['HEADLESS', 'True']</msg>
+<var>${parts}</var>
+<arg>${stripped}</arg>
+<arg>=</arg>
+<arg>1</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.484021" elapsed="0.000000"/>
+</kw>
+<kw name="Get Length" owner="BuiltIn">
+<msg time="2026-01-20T13:47:20.485022" level="INFO">Length is 2.</msg>
+<msg time="2026-01-20T13:47:20.485022" level="INFO">${plen} = 2</msg>
+<var>${plen}</var>
+<arg>${parts}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.484021" elapsed="0.001001"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>${plen} &lt; 2</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.485022" elapsed="0.000000"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2026-01-20T13:47:20.485022" level="INFO">${key} = HEADLESS</msg>
+<var>${key}</var>
+<arg>${parts}</arg>
+<arg>0</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.485022" elapsed="0.000000"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2026-01-20T13:47:20.486019" level="INFO">${val} = True</msg>
+<var>${val}</var>
+<arg>${parts}</arg>
+<arg>1</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.486019" elapsed="0.000000"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:47:20.486019" level="INFO">${key} = HEADLESS</msg>
+<var>${key}</var>
+<arg>${key}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.486019" elapsed="0.000000"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:47:20.486019" level="INFO">${val} = True</msg>
+<var>${val}</var>
+<arg>${val}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.486019" elapsed="0.000000"/>
+</kw>
+<kw name="Set Environment Variable" owner="OperatingSystem">
+<msg time="2026-01-20T13:47:20.487017" level="INFO">Environment variable 'HEADLESS' set to value 'True'.</msg>
+<arg>${key}</arg>
+<arg>${val}</arg>
+<doc>Sets an environment variable to a specified value.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.487017" elapsed="0.000000"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${env}</arg>
+<arg>${key}</arg>
+<arg>${val}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.487017" elapsed="0.000000"/>
+</kw>
+<var name="${line}">HEADLESS=True</var>
+<status status="PASS" start="2026-01-20T13:47:20.482021" elapsed="0.004996"/>
+</iter>
+<var>${line}</var>
+<value>@{lines}</value>
+<status status="PASS" start="2026-01-20T13:47:20.444183" elapsed="0.042834"/>
+</for>
+<status status="PASS" start="2026-01-20T13:47:20.440132" elapsed="0.046885"/>
+</branch>
+<status status="PASS" start="2026-01-20T13:47:20.440132" elapsed="0.046885"/>
+</if>
+<kw name="Set Suite Variable" owner="BuiltIn">
+<msg time="2026-01-20T13:47:20.489034" level="INFO">${url} = https://rimcentral5.rimsys.io</msg>
+<arg>${url}</arg>
+<arg>${env.APP_URL}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.487017" elapsed="0.002017"/>
+</kw>
+<kw name="Set Suite Variable" owner="BuiltIn">
+<msg time="2026-01-20T13:47:20.491016" level="INFO">${username} = santosh.mangalapalli@rimsys.io</msg>
+<arg>${username}</arg>
+<arg>${env.APP_USERNAME}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.489034" elapsed="0.001982"/>
+</kw>
+<kw name="Set Suite Variable" owner="BuiltIn">
+<msg time="2026-01-20T13:47:20.492944" level="INFO">${password} = Merc5@udi9Jag7</msg>
+<arg>${password}</arg>
+<arg>${env.APP_PASSWORD}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.491016" elapsed="0.001928"/>
+</kw>
+<kw name="Set Suite Variable" owner="BuiltIn">
+<msg time="2026-01-20T13:47:20.494949" level="INFO">${headless} = True</msg>
+<arg>${headless}</arg>
+<arg>${env.HEADLESS}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.493953" elapsed="0.000996"/>
+</kw>
+<arg>${EXECDIR}${/}.env</arg>
+<doc>Read key=value pairs from a .env file and set suite variables for url/username/password.
+Keys expected: APP_URL, APP_USERNAME, APP_PASSWORD. Lines starting with # are ignored.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.438149" elapsed="0.056800"/>
+</kw>
+<kw name="Setup QTest Integration">
+<kw name="Get Current Date" owner="DateTime">
+<msg time="2026-01-20T13:47:20.496079" level="INFO">${date} = 2026-01-20 13:47</msg>
+<var>${date}</var>
+<arg>result_format=%Y-%m-%d %H:%M</arg>
+<doc>Returns current local or UTC time with an optional increment.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.496079" elapsed="0.000000"/>
+</kw>
+<kw name="Set Suite Variable" owner="BuiltIn">
+<msg time="2026-01-20T13:47:20.498149" level="INFO">${CURRENT_DATE} = 2026-01-20 13:47</msg>
+<arg>${CURRENT_DATE}</arg>
+<arg>${date}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.496079" elapsed="0.002070"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2026-01-20T13:47:20.498149" level="INFO">Initializing QTest Integration</msg>
+<arg>Initializing QTest Integration</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.498149" elapsed="0.000936"/>
+</kw>
+<kw name="Initialize Qtest Manager" owner="qtest_robot_library">
+<msg time="2026-01-20T13:47:20.502110" level="INFO">QTest Manager initialized</msg>
+<msg time="2026-01-20T13:47:20.502110" level="INFO">QTest Manager initialized with config: D:\QZ_onedrive_dontDelete\OneDrive - QualiZeal\rimsys_qtest\config.json</msg>
+<arg>${QTEST_CONFIG}</arg>
+<status status="PASS" start="2026-01-20T13:47:20.499085" elapsed="0.003025"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2026-01-20T13:47:20.503534" level="INFO">Creating test run in QTest</msg>
+<arg>Creating test run in QTest</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.503534" elapsed="0.000000"/>
+</kw>
+<kw name="Create Qtest Test Run" owner="qtest_robot_library">
+<msg time="2026-01-20T13:47:42.217582" level="INFO">Approving test case ID: 56304588</msg>
+<msg time="2026-01-20T13:47:43.278644" level="INFO">Approved test case ID 56304588</msg>
+<msg time="2026-01-20T13:47:43.632888" level="INFO">Ensuring test run: Robot Framework Test Run - TestDemo</msg>
+<msg time="2026-01-20T13:47:44.710206" level="INFO">Test run created successfully. ID: 473422810</msg>
+<msg time="2026-01-20T13:47:44.711254" level="INFO">Test run created: Robot Framework Test Run - TestDemo (ID: 473422810)</msg>
+<msg time="2026-01-20T13:47:44.711254" level="INFO">${test_run_id} = 473422810</msg>
+<var>${test_run_id}</var>
+<arg>name=${TEST_RUN_NAME}</arg>
+<arg>test_case_name=${TEST NAME}</arg>
+<arg>test_cycle_name=${TEST_CYCLE_NAME}</arg>
+<status status="PASS" start="2026-01-20T13:47:20.503534" elapsed="24.207720"/>
+</kw>
+<kw name="Set Suite Variable" owner="BuiltIn">
+<msg time="2026-01-20T13:47:44.713272" level="INFO">${TEST_RUN_ID} = 473422810</msg>
+<arg>${TEST_RUN_ID}</arg>
+<arg>${test_run_id}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<status status="PASS" start="2026-01-20T13:47:44.712293" elapsed="0.000979"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2026-01-20T13:47:44.714202" level="INFO">Test Run Created - ID: 473422810</msg>
+<arg>Test Run Created - ID: ${test_run_id}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2026-01-20T13:47:44.714202" elapsed="0.000000"/>
+</kw>
+<kw name="Get QTest Test Case ID">
+<kw name="Get Qtest Test Case Id By Name" owner="qtest_robot_library">
+<msg time="2026-01-20T13:48:07.220531" level="INFO">Resolved test case 'Validate that Admin user is able to navigate to the required page and search Label Aliases' -&gt; ID 56304588</msg>
+<msg time="2026-01-20T13:48:07.220531" level="INFO">${test_case_id} = 56304588</msg>
+<var>${test_case_id}</var>
+<arg>${test_name}</arg>
+<status status="PASS" start="2026-01-20T13:47:44.715292" elapsed="22.505239"/>
+</kw>
+<kw name="Return From Keyword" owner="BuiltIn">
+<msg time="2026-01-20T13:48:07.221622" level="INFO">Returning from the enclosing user keyword.</msg>
+<arg>${test_case_id}</arg>
+<doc>Returns from the enclosing user keyword.</doc>
+<status status="PASS" start="2026-01-20T13:48:07.220531" elapsed="0.001091"/>
+</kw>
+<msg time="2026-01-20T13:48:07.221622" level="INFO">${test_case_id} = 56304588</msg>
+<var>${test_case_id}</var>
+<arg>${TEST_NAME}</arg>
+<doc>Map Robot Framework test name to QTest test case ID</doc>
+<status status="PASS" start="2026-01-20T13:47:44.715292" elapsed="22.506330"/>
+</kw>
+<kw name="Set Test Variable" owner="BuiltIn">
+<msg time="2026-01-20T13:48:07.221622" level="INFO">${TEST_CASE_ID} = 56304588</msg>
+<arg>${TEST_CASE_ID}</arg>
+<arg>${test_case_id}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<status status="PASS" start="2026-01-20T13:48:07.221622" elapsed="0.000000"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2026-01-20T13:48:07.222618" level="INFO">Test Case ID - 56304588</msg>
+<arg>Test Case ID - ${TEST_CASE_ID}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2026-01-20T13:48:07.222618" elapsed="0.000000"/>
+</kw>
+<doc>Initialize QTest integration and create test run</doc>
+<status status="PASS" start="2026-01-20T13:47:20.496079" elapsed="46.726539"/>
+</kw>
+<kw name="Log Test Start">
+<kw name="Log" owner="BuiltIn">
+<msg time="2026-01-20T13:48:07.222618" level="INFO">Starting test: Validate that Admin user is able to navigate to the required page and search Label Aliases</msg>
+<arg>Starting test: ${TEST_NAME}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2026-01-20T13:48:07.222618" elapsed="0.000997"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-01-20T13:48:07.223615" level="INFO">${logs} = {}</msg>
+<var>${logs}</var>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-01-20T13:48:07.223615" elapsed="0.000000"/>
+</kw>
+<kw name="Set Test Variable" owner="BuiltIn">
+<msg time="2026-01-20T13:48:07.224524" level="INFO">${STEP_LOGS} = {}</msg>
+<arg>${STEP_LOGS}</arg>
+<arg>${logs}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<status status="PASS" start="2026-01-20T13:48:07.223615" elapsed="0.000909"/>
+</kw>
+<doc>Log the start of each test</doc>
+<status status="PASS" start="2026-01-20T13:48:07.222618" elapsed="0.001906"/>
+</kw>
+<kw name="Login To Application" owner="common_keywords">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-01-20T13:48:07.225610" level="INFO">${CHROME_BINARY} = C:/Application/chrome.exe</msg>
+<var>${CHROME_BINARY}</var>
+<arg>C:/Application/chrome.exe</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-01-20T13:48:07.225610" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-01-20T13:48:07.225610" level="INFO">${CHROME_DRIVER} = C:/chrome-win64/chromedriver.exe</msg>
+<var>${CHROME_DRIVER}</var>
+<arg>C:/chrome-win64/chromedriver.exe</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-01-20T13:48:07.225610" elapsed="0.000000"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-01-20T13:48:07.226614" level="INFO">${options} = &lt;selenium.webdriver.chrome.options.Options object at 0x000002730823A920&gt;</msg>
+<var>${options}</var>
+<arg>sys.modules['selenium.webdriver'].ChromeOptions()</arg>
+<arg>sys</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-01-20T13:48:07.225610" elapsed="0.001004"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-01-20T13:48:07.226614" level="INFO">${options.binary_location} = C:/Application/chrome.exe</msg>
+<var>${options.binary_location}</var>
+<arg>${CHROME_BINARY}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-01-20T13:48:07.226614" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable If" owner="BuiltIn">
+<arg>'${CHROME_BINARY}' != '${None}'</arg>
+<arg>Set Property</arg>
+<arg>${options}</arg>
+<arg>binary_location</arg>
+<arg>${CHROME_BINARY}</arg>
+<doc>Sets variable based on the given condition.</doc>
+<status status="PASS" start="2026-01-20T13:48:07.226614" elapsed="0.000000"/>
+</kw>
+<if>
+<branch type="IF" condition="'${headless}' == 'True'">
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--headless</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="PASS" start="2026-01-20T13:48:07.227609" elapsed="0.000000"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--window-size\=1920,1080</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="PASS" start="2026-01-20T13:48:07.227609" elapsed="0.000000"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--disable-gpu</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="PASS" start="2026-01-20T13:48:07.227609" elapsed="0.000000"/>
+</kw>
+<status status="PASS" start="2026-01-20T13:48:07.226614" elapsed="0.001990"/>
+</branch>
+<status status="PASS" start="2026-01-20T13:48:07.226614" elapsed="0.001990"/>
+</if>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--no-sandbox</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="PASS" start="2026-01-20T13:48:07.228604" elapsed="0.000000"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--disable-dev-shm-usage</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="PASS" start="2026-01-20T13:48:07.228604" elapsed="0.000000"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-01-20T13:48:07.229608" level="INFO">${service} = &lt;selenium.webdriver.chrome.service.Service object at 0x000002730823B5B0&gt;</msg>
+<var>${service}</var>
+<arg>sys.modules['selenium.webdriver.chrome.service'].Service('${CHROME_DRIVER}')</arg>
+<arg>sys</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-01-20T13:48:07.228604" elapsed="0.001004"/>
+</kw>
+<kw name="Create Webdriver" owner="SeleniumLibrary">
+<msg time="2026-01-20T13:48:07.229608" level="INFO">Creating an instance of the Chrome WebDriver.</msg>
+<arg>${BROWSER}</arg>
+<arg>options=${options}</arg>
+<arg>service=${service}</arg>
+<doc>Creates an instance of Selenium WebDriver.</doc>
+<status status="PASS" start="2026-01-20T13:48:07.229608" elapsed="3.433035"/>
+</kw>
+<kw name="Go To" owner="SeleniumLibrary">
+<msg time="2026-01-20T13:48:10.663691" level="INFO">Opening url 'https://rimcentral5.rimsys.io'</msg>
+<arg>${url}</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="PASS" start="2026-01-20T13:48:10.662643" elapsed="6.227492"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2026-01-20T13:48:16.890135" elapsed="0.118314"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-01-20T13:48:27.020484" level="INFO">Slept 10 seconds.</msg>
+<arg>${DEFAULT_TIMEOUT}</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-01-20T13:48:17.009490" elapsed="10.010994"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${AZURE_LOGIN_BUTTON}</arg>
+<arg>${MID_TIMEOUT}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-01-20T13:48:27.021411" elapsed="0.058053"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2026-01-20T13:48:27.079464" level="INFO">Clicking element 'xpath=//*[@alt="Login with Azure"]'.</msg>
+<arg>${AZURE_LOGIN_BUTTON}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2026-01-20T13:48:27.079464" elapsed="0.626016"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${LOGIN_EMAIL_INPUT}</arg>
+<arg>${MID_TIMEOUT}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-01-20T13:48:27.705480" elapsed="0.536515"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2026-01-20T13:48:28.243075" level="INFO">Typing text 'santosh.mangalapalli@rimsys.io' into text field 'xpath=//*[@name="loginfmt"]'.</msg>
+<arg>${LOGIN_EMAIL_INPUT}</arg>
+<arg>${username}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2026-01-20T13:48:28.241995" elapsed="0.153394"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${LOGIN_NEXT_BUTTON}</arg>
+<arg>${MID_TIMEOUT}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-01-20T13:48:28.395389" elapsed="0.024218"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2026-01-20T13:48:28.420612" level="INFO">Clicking element 'id=idSIButton9'.</msg>
+<arg>${LOGIN_NEXT_BUTTON}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2026-01-20T13:48:28.419607" elapsed="0.083170"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${LOGIN_PASSWORD_INPUT}</arg>
+<arg>${MID_TIMEOUT}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-01-20T13:48:28.503287" elapsed="1.444174"/>
+</kw>
+<kw name="Input Password" owner="SeleniumLibrary">
+<msg time="2026-01-20T13:48:29.949369" level="INFO">Typing password into text field 'xpath=//*[@name="passwd"]'.</msg>
+<msg time="2026-01-20T13:48:29.993625" level="INFO">Temporally setting log level to: NONE</msg>
+<arg>${LOGIN_PASSWORD_INPUT}</arg>
+<arg>${password}</arg>
+<doc>Types the given password into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2026-01-20T13:48:29.948455" elapsed="0.088422"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${LOGIN_SUBMIT_BUTTON}</arg>
+<arg>${MID_TIMEOUT}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-01-20T13:48:30.037884" elapsed="0.021049"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2026-01-20T13:48:30.059960" level="INFO">Clicking element 'xpath=//*[@type="submit"]'.</msg>
+<arg>${LOGIN_SUBMIT_BUTTON}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2026-01-20T13:48:30.058933" elapsed="0.733578"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-01-20T13:48:40.807409" level="INFO">Slept 10 seconds.</msg>
+<arg>${DEFAULT_TIMEOUT}</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-01-20T13:48:30.793529" elapsed="10.013880"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${LOGIN_STAY_SIGNED_IN_HEADER}</arg>
+<arg>${MID_TIMEOUT}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-01-20T13:48:40.807409" elapsed="0.026466"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2026-01-20T13:48:40.835180" level="INFO">Clicking element 'id=idSIButton9'.</msg>
+<arg>${LOGIN_NEXT_BUTTON}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2026-01-20T13:48:40.833875" elapsed="1.545984"/>
+</kw>
+<kw name="Wait Until Page Contains Element" owner="SeleniumLibrary">
+<arg>css:body</arg>
+<arg>${DEFAULT_TIMEOUT}</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" start="2026-01-20T13:48:42.380365" elapsed="0.020712"/>
+</kw>
+<arg>${url}</arg>
+<arg>${username}</arg>
+<arg>${password}</arg>
+<doc>Open the application and perform login using locators from login.robot.</doc>
+<status status="PASS" start="2026-01-20T13:48:07.224524" elapsed="35.176553"/>
+</kw>
+<arg>Read Env And Set Credentials</arg>
+<arg>${EXECDIR}${/}.env</arg>
+<arg>AND</arg>
+<arg>Setup QTest Integration</arg>
+<arg>AND</arg>
+<arg>Log Test Start</arg>
+<arg>AND</arg>
+<arg>Login To Application</arg>
+<arg>${url}</arg>
+<arg>${username}</arg>
+<arg>${password}</arg>
+<doc>Executes all the given keywords in a sequence.</doc>
+<status status="PASS" start="2026-01-20T13:47:20.437131" elapsed="81.963946"/>
+</kw>
+<kw name="Welcome Page Should Be Loaded">
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${WELCOME_BACK_HEADER}</arg>
+<arg>${MAX_TIMEOUT}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-01-20T13:48:42.402804" elapsed="2.298386"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${WELCOME_BACK_SEARCH_INPUT}</arg>
+<arg>${MAX_TIMEOUT}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-01-20T13:48:44.702193" elapsed="0.031720"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2026-01-20T13:48:44.734916" level="INFO">Typing text 'cardinal' into text field 'id=search'.</msg>
+<arg>${WELCOME_BACK_SEARCH_INPUT}</arg>
+<arg>cardinal</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2026-01-20T13:48:44.733913" elapsed="0.152312"/>
+</kw>
+<kw name="Press Keys" owner="SeleniumLibrary">
+<msg time="2026-01-20T13:48:44.887318" level="INFO">Sending key(s) ('ENTER',) to page.</msg>
+<msg time="2026-01-20T13:48:44.887318" level="INFO">Pressing special key ENTER to browser.</msg>
+<msg time="2026-01-20T13:48:44.887318" level="INFO">Releasing special key ENTER.</msg>
+<arg>None</arg>
+<arg>ENTER</arg>
+<doc>Simulates the user pressing key(s) to an element or on the active browser.</doc>
+<status status="PASS" start="2026-01-20T13:48:44.887318" elapsed="0.014294"/>
+</kw>
+<doc>Verify that the welcome page is loaded</doc>
+<status status="PASS" start="2026-01-20T13:48:42.402804" elapsed="2.498808"/>
+</kw>
+<kw name="Choose Client">
+<kw name="Format String" owner="String">
+<msg time="2026-01-20T13:48:44.903592" level="INFO">${CLIENT_NAMEOBJ} = xpath=//*[text()='Cardinal']/..</msg>
+<var>${CLIENT_NAMEOBJ}</var>
+<arg>${CLIENT_NAME}</arg>
+<arg>${CLIENT_NAME_PARAM}</arg>
+<doc>Formats a ``template`` using the given ``positional`` and ``named`` arguments.</doc>
+<status status="PASS" start="2026-01-20T13:48:44.902605" elapsed="0.000987"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${CLIENT_NAMEOBJ}</arg>
+<arg>${MAX_TIMEOUT}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-01-20T13:48:44.903592" elapsed="0.495332"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2026-01-20T13:48:45.400955" level="INFO">Clicking element 'xpath=//*[text()='Cardinal']/..'.</msg>
+<arg>${CLIENT_NAMEOBJ}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2026-01-20T13:48:45.399956" elapsed="0.062856"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${CLIENT_ENVIRONMENT_ACTION_BUTTON}</arg>
+<arg>${MAX_TIMEOUT}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-01-20T13:48:45.463912" elapsed="1.148435"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2026-01-20T13:48:46.612347" level="INFO">Clicking element 'xpath=//*[contains(text(),"Test")]/following-sibling::td//*[@class='table-action mr-3']'.</msg>
+<arg>${CLIENT_ENVIRONMENT_ACTION_BUTTON}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2026-01-20T13:48:46.612347" elapsed="0.057115"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-01-20T13:49:16.682924" level="INFO">Slept 30 seconds.</msg>
+<arg>${MID_TIMEOUT}</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-01-20T13:48:46.670459" elapsed="30.012465"/>
+</kw>
+<kw name="Select Environment and client admin login">
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${CLIENT_ENVIRONMENT_AUTH_LINK}</arg>
+<arg>${AUTH_TIMEOUT}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-01-20T13:49:16.684913" elapsed="5.976552"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2026-01-20T13:49:22.661465" level="INFO">Clicking element 'xpath=//a//*[contains(text(),'Auth')]'.</msg>
+<arg>${CLIENT_ENVIRONMENT_AUTH_LINK}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2026-01-20T13:49:22.661465" elapsed="0.066104"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${CLIENT_ENVIRONMENT_LOGIN_REASON_INPUT}</arg>
+<arg>${MAX_TIMEOUT}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-01-20T13:49:22.727569" elapsed="1.377561"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2026-01-20T13:49:24.107135" level="INFO">Typing text 'Testing login access' into text field 'xpath=//*[@placeholder="I need to login because ..."]'.</msg>
+<arg>${CLIENT_ENVIRONMENT_LOGIN_REASON_INPUT}</arg>
+<arg>Testing login access</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2026-01-20T13:49:24.106124" elapsed="0.350507"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${CLIENT_ENVIRONMENT_ADMINISTRATOR_BUTTON}</arg>
+<arg>${MAX_TIMEOUT}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-01-20T13:49:24.456631" elapsed="0.021511"/>
+</kw>
+<kw name="Scroll Element Into View" owner="SeleniumLibrary">
+<arg>${CLIENT_ENVIRONMENT_ADMINISTRATOR_BUTTON}</arg>
+<doc>Scrolls the element identified by ``locator`` into view.</doc>
+<status status="PASS" start="2026-01-20T13:49:24.479141" elapsed="0.287628"/>
+</kw>
+<kw name="Set Focus To Element" owner="SeleniumLibrary">
+<arg>${CLIENT_ENVIRONMENT_ADMINISTRATOR_BUTTON}</arg>
+<doc>Sets the focus to the element identified by ``locator``.</doc>
+<status status="PASS" start="2026-01-20T13:49:24.767768" elapsed="0.034828"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2026-01-20T13:49:24.803595" level="INFO">Clicking element 'xpath=//p[normalize-space()='Administrator']/ancestor::button'.</msg>
+<arg>${CLIENT_ENVIRONMENT_ADMINISTRATOR_BUTTON}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2026-01-20T13:49:24.803595" elapsed="0.090757"/>
+</kw>
+<kw name="Wait Until Keyword Succeeds" owner="BuiltIn">
+<kw name="Switch Window" owner="SeleniumLibrary">
+<msg time="2026-01-20T13:49:25.088705" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-4.png"&gt;&lt;img src="selenium-screenshot-4.png" width="800px"&gt;&lt;/a&gt;</msg>
+<msg time="2026-01-20T13:49:25.088705" level="FAIL">Unable to locate window with title 'Rimsys'.</msg>
+<arg>title=Rimsys</arg>
+<doc>Switches to browser window matching ``locator``.</doc>
+<status status="FAIL" start="2026-01-20T13:49:24.895358" elapsed="0.203617">Unable to locate window with title 'Rimsys'.</status>
+</kw>
+<kw name="Switch Window" owner="SeleniumLibrary">
+<msg time="2026-01-20T13:49:25.859603" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="selenium-screenshot-5.png"&gt;&lt;img src="selenium-screenshot-5.png" width="800px"&gt;&lt;/a&gt;</msg>
+<msg time="2026-01-20T13:49:25.860601" level="FAIL">Unable to locate window with title 'Rimsys'.</msg>
+<arg>title=Rimsys</arg>
+<doc>Switches to browser window matching ``locator``.</doc>
+<status status="FAIL" start="2026-01-20T13:49:25.605690" elapsed="0.255911">Unable to locate window with title 'Rimsys'.</status>
+</kw>
+<kw name="Switch Window" owner="SeleniumLibrary">
+<arg>title=Rimsys</arg>
+<doc>Switches to browser window matching ``locator``.</doc>
+<status status="PASS" start="2026-01-20T13:49:26.369026" elapsed="4.118026"/>
+</kw>
+<arg>${MAX_TIMEOUT}</arg>
+<arg>500ms</arg>
+<arg>Switch Window</arg>
+<arg>title=Rimsys</arg>
+<doc>Runs the specified keyword and retries if it fails.</doc>
+<status status="PASS" start="2026-01-20T13:49:24.894352" elapsed="5.592700"/>
+</kw>
+<kw name="Get Title" owner="SeleniumLibrary">
+<msg time="2026-01-20T13:49:30.493850" level="INFO">${PAGETITLE} = Rimsys</msg>
+<var>${PAGETITLE}</var>
+<doc>Returns the title of the current page.</doc>
+<status status="PASS" start="2026-01-20T13:49:30.487052" elapsed="0.006798"/>
+</kw>
+<kw name="ADD STEP LOG TO QTEST" owner="common_keywords">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-01-20T13:49:30.495854" level="INFO">${attachment} = </msg>
+<var>${attachment}</var>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-01-20T13:49:30.494857" elapsed="0.000997"/>
+</kw>
+<if>
+<branch type="IF" condition="'${capture_screenshot}' == 'True'">
+<kw name="Create Directory" owner="OperatingSystem">
+<msg time="2026-01-20T13:49:30.495854" level="INFO" html="true">Directory '&lt;a href="file://D:\QZ_onedrive_dontDelete\OneDrive - QualiZeal\rimsys_qtest\screenshots"&gt;D:\QZ_onedrive_dontDelete\OneDrive - QualiZeal\rimsys_qtest\screenshots&lt;/a&gt;' already exists.</msg>
+<arg>${EXECDIR}${/}screenshots</arg>
+<doc>Creates the specified directory.</doc>
+<status status="PASS" start="2026-01-20T13:49:30.495854" elapsed="0.000000"/>
+</kw>
+<kw name="Get Current Date" owner="DateTime">
+<msg time="2026-01-20T13:49:30.495854" level="INFO">${timestamp} = 20260120_134930</msg>
+<var>${timestamp}</var>
+<arg>result_format=%Y%m%d_%H%M%S</arg>
+<doc>Returns current local or UTC time with an optional increment.</doc>
+<status status="PASS" start="2026-01-20T13:49:30.495854" elapsed="0.000000"/>
+</kw>
+<kw name="Replace String Using Regexp" owner="String">
+<msg time="2026-01-20T13:49:30.497689" level="INFO">${safe_name} = Validate_that_Admin_user_is_able_to_navigate_to_the_required_page_and_search_Label_Aliases</msg>
+<var>${safe_name}</var>
+<arg>${TEST_NAME}</arg>
+<arg>\\s+</arg>
+<arg>_</arg>
+<doc>Replaces ``pattern`` in the given ``string`` with ``replace_with``.</doc>
+<status status="PASS" start="2026-01-20T13:49:30.495854" elapsed="0.001835"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-01-20T13:49:30.497689" level="INFO">${filename} = step_Validate_that_Admin_user_is_able_to_navigate_to_the_required_page_and_search_Label_Aliases_1_20260120_134930.png</msg>
+<var>${filename}</var>
+<arg>${screenshot_prefix}_${safe_name}_${step_number}_${timestamp}.png</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-01-20T13:49:30.497689" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-01-20T13:49:30.498694" level="INFO">${attachment} = D:\QZ_onedrive_dontDelete\OneDrive - QualiZeal\rimsys_qtest\screenshots\step_Validate_that_Admin_user_is_able_to_navigate_to_the_required_page_and_search_Label_Aliases_1_20260120_134930.png</msg>
+<var>${attachment}</var>
+<arg>${EXECDIR}${/}screenshots${/}${filename}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-01-20T13:49:30.497689" elapsed="0.001005"/>
+</kw>
+<kw name="Capture Page Screenshot" owner="SeleniumLibrary">
+<msg time="2026-01-20T13:49:30.711963" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="../screenshots/step_Validate_that_Admin_user_is_able_to_navigate_to_the_required_page_and_search_Label_Aliases_1_20260120_134930.png"&gt;&lt;img src="../screenshots/step_Validate_that_Admin_user_is_able_to_navigate_to_the_required_page_and_search_Label_Aliases_1_20260120_134930.png" width="800px"&gt;&lt;/a&gt;</msg>
+<arg>${attachment}</arg>
+<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
+<status status="PASS" start="2026-01-20T13:49:30.498694" elapsed="0.213269"/>
+</kw>
+<status status="PASS" start="2026-01-20T13:49:30.495854" elapsed="0.216109"/>
+</branch>
+<status status="PASS" start="2026-01-20T13:49:30.495854" elapsed="0.216109"/>
+</if>
+<kw name="Append Qtest Test Step Log" owner="qtest_robot_library">
+<msg time="2026-01-20T13:49:31.064226" level="INFO">${step_logs} = {'logs': [{'status': {'id': 601, 'name': 'PASSED'}, 'actual_result': 'Rimsys', 'expected_result': 'Expected ok', 'description': 'Step ran fine', 'test_step_id': 1313131674, 'attachment': 'D:\\QZ_onedr...</msg>
+<var>${step_logs}</var>
+<arg>${test_case_id}</arg>
+<arg>${step_logs}</arg>
+<arg>${step_number}</arg>
+<arg>${status}</arg>
+<arg>${actual}</arg>
+<arg>${expected}</arg>
+<arg>${comments}</arg>
+<arg>${attachment}</arg>
+<status status="PASS" start="2026-01-20T13:49:30.713408" elapsed="0.350818"/>
+</kw>
+<return>
+<value>${step_logs}</value>
+<status status="PASS" start="2026-01-20T13:49:31.064226" elapsed="0.000000"/>
+</return>
+<msg time="2026-01-20T13:49:31.064226" level="INFO">${STEP_LOGS} = {'logs': [{'status': {'id': 601, 'name': 'PASSED'}, 'actual_result': 'Rimsys', 'expected_result': 'Expected ok', 'description': 'Step ran fine', 'test_step_id': 1313131674, 'attachment': 'D:\\QZ_onedr...</msg>
+<var>${STEP_LOGS}</var>
+<arg>${TEST_CASE_ID}</arg>
+<arg>${STEP_LOGS}</arg>
+<arg>1</arg>
+<arg>PASSED</arg>
+<arg>${PAGETITLE}</arg>
+<arg>Expected ok</arg>
+<arg>Step ran fine</arg>
+<doc>Add a test step log to QTest for the current test case.</doc>
+<status status="PASS" start="2026-01-20T13:49:30.493850" elapsed="0.570376"/>
+</kw>
+<return>
+<value>${PAGETITLE}</value>
+<status status="PASS" start="2026-01-20T13:49:31.064226" elapsed="0.000000"/>
+</return>
+<status status="PASS" start="2026-01-20T13:49:16.683845" elapsed="14.380381"/>
+</kw>
+<arg>Cardinal</arg>
+<status status="PASS" start="2026-01-20T13:48:44.902605" elapsed="46.161621"/>
+</kw>
+<kw name="Open Settings and Label Aliases">
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-01-20T13:49:41.078077" level="INFO">Slept 10 seconds.</msg>
+<arg>${DEFAULT_TIMEOUT}</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-01-20T13:49:31.065730" elapsed="10.012347"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${LASTACTIVITY_HEADER}</arg>
+<arg>${MAX_TIMEOUT}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-01-20T13:49:41.078996" elapsed="0.063136"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-01-20T13:49:51.155486" level="INFO">Slept 10 seconds.</msg>
+<arg>${DEFAULT_TIMEOUT}</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-01-20T13:49:41.143218" elapsed="10.013266"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${PROFILEBUTTON}</arg>
+<arg>${MAX_TIMEOUT}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-01-20T13:49:51.157489" elapsed="0.040749"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-01-20T13:50:01.206456" level="INFO">Slept 10 seconds.</msg>
+<arg>${DEFAULT_TIMEOUT}</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-01-20T13:49:51.198238" elapsed="10.008218"/>
+</kw>
+<kw name="Scroll Element Into View" owner="SeleniumLibrary">
+<arg>${PROFILEBUTTON}</arg>
+<doc>Scrolls the element identified by ``locator`` into view.</doc>
+<status status="PASS" start="2026-01-20T13:50:01.206456" elapsed="0.359550"/>
+</kw>
+<kw name="Set Focus To Element" owner="SeleniumLibrary">
+<arg>${PROFILEBUTTON}</arg>
+<doc>Sets the focus to the element identified by ``locator``.</doc>
+<status status="PASS" start="2026-01-20T13:50:01.567014" elapsed="0.040408"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2026-01-20T13:50:01.608437" level="INFO">Clicking element 'xpath=//button[@id="user-menu"]'.</msg>
+<arg>${PROFILEBUTTON}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2026-01-20T13:50:01.607422" elapsed="0.115928"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${SETTINGS_LINK}</arg>
+<arg>${MAX_TIMEOUT}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-01-20T13:50:01.723350" elapsed="0.042063"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2026-01-20T13:50:01.766143" level="INFO">Clicking element 'xpath=//a[contains(text(),"Settings")]'.</msg>
+<arg>${SETTINGS_LINK}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2026-01-20T13:50:01.766143" elapsed="0.058294"/>
+</kw>
+<status status="PASS" start="2026-01-20T13:49:31.065730" elapsed="30.758707"/>
+</kw>
+<kw name="validate Label Aliases page">
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${LABEL_ALIASES_LINK}</arg>
+<arg>${MAX_TIMEOUT}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-01-20T13:50:01.825451" elapsed="0.539046"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2026-01-20T13:50:02.364497" level="INFO">Clicking element 'xpath=(//a[@href='/settings/general/aliases'])[2]'.</msg>
+<arg>${LABEL_ALIASES_LINK}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2026-01-20T13:50:02.364497" elapsed="0.071073"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${LABEL_ALIASES_SEARCH_INPUT}</arg>
+<arg>${MAX_TIMEOUT}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-01-20T13:50:02.435570" elapsed="0.265691"/>
+</kw>
+<status status="PASS" start="2026-01-20T13:50:01.825451" elapsed="0.875810"/>
+</kw>
+<kw name="Enter Legal search criteria and validate results">
+<kw name="ADD STEP LOG TO QTEST" owner="common_keywords">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-01-20T13:50:02.707955" level="INFO">${attachment} = </msg>
+<var>${attachment}</var>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-01-20T13:50:02.706296" elapsed="0.001659"/>
+</kw>
+<if>
+<branch type="IF" condition="'${capture_screenshot}' == 'True'">
+<kw name="Create Directory" owner="OperatingSystem">
+<msg time="2026-01-20T13:50:02.709636" level="INFO" html="true">Directory '&lt;a href="file://D:\QZ_onedrive_dontDelete\OneDrive - QualiZeal\rimsys_qtest\screenshots"&gt;D:\QZ_onedrive_dontDelete\OneDrive - QualiZeal\rimsys_qtest\screenshots&lt;/a&gt;' already exists.</msg>
+<arg>${EXECDIR}${/}screenshots</arg>
+<doc>Creates the specified directory.</doc>
+<status status="PASS" start="2026-01-20T13:50:02.707955" elapsed="0.001681"/>
+</kw>
+<kw name="Get Current Date" owner="DateTime">
+<msg time="2026-01-20T13:50:02.711321" level="INFO">${timestamp} = 20260120_135002</msg>
+<var>${timestamp}</var>
+<arg>result_format=%Y%m%d_%H%M%S</arg>
+<doc>Returns current local or UTC time with an optional increment.</doc>
+<status status="PASS" start="2026-01-20T13:50:02.709636" elapsed="0.001685"/>
+</kw>
+<kw name="Replace String Using Regexp" owner="String">
+<msg time="2026-01-20T13:50:02.712986" level="INFO">${safe_name} = Validate_that_Admin_user_is_able_to_navigate_to_the_required_page_and_search_Label_Aliases</msg>
+<var>${safe_name}</var>
+<arg>${TEST_NAME}</arg>
+<arg>\\s+</arg>
+<arg>_</arg>
+<doc>Replaces ``pattern`` in the given ``string`` with ``replace_with``.</doc>
+<status status="PASS" start="2026-01-20T13:50:02.711321" elapsed="0.001665"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-01-20T13:50:02.714644" level="INFO">${filename} = step_Validate_that_Admin_user_is_able_to_navigate_to_the_required_page_and_search_Label_Aliases_2_20260120_135002.png</msg>
+<var>${filename}</var>
+<arg>${screenshot_prefix}_${safe_name}_${step_number}_${timestamp}.png</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-01-20T13:50:02.712986" elapsed="0.001658"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-01-20T13:50:02.716319" level="INFO">${attachment} = D:\QZ_onedrive_dontDelete\OneDrive - QualiZeal\rimsys_qtest\screenshots\step_Validate_that_Admin_user_is_able_to_navigate_to_the_required_page_and_search_Label_Aliases_2_20260120_135002.png</msg>
+<var>${attachment}</var>
+<arg>${EXECDIR}${/}screenshots${/}${filename}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-01-20T13:50:02.715228" elapsed="0.001693"/>
+</kw>
+<kw name="Capture Page Screenshot" owner="SeleniumLibrary">
+<msg time="2026-01-20T13:50:03.128591" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="../screenshots/step_Validate_that_Admin_user_is_able_to_navigate_to_the_required_page_and_search_Label_Aliases_2_20260120_135002.png"&gt;&lt;img src="../screenshots/step_Validate_that_Admin_user_is_able_to_navigate_to_the_required_page_and_search_Label_Aliases_2_20260120_135002.png" width="800px"&gt;&lt;/a&gt;</msg>
+<arg>${attachment}</arg>
+<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
+<status status="PASS" start="2026-01-20T13:50:02.716921" elapsed="0.411670"/>
+</kw>
+<status status="PASS" start="2026-01-20T13:50:02.707955" elapsed="0.420636"/>
+</branch>
+<status status="PASS" start="2026-01-20T13:50:02.707955" elapsed="0.420636"/>
+</if>
+<kw name="Append Qtest Test Step Log" owner="qtest_robot_library">
+<msg time="2026-01-20T13:50:03.478846" level="INFO">${step_logs} = {'logs': [{'status': {'id': 601, 'name': 'PASSED'}, 'actual_result': 'Rimsys', 'expected_result': 'Expected ok', 'description': 'Step ran fine', 'test_step_id': 1313131674, 'attachment': 'D:\\QZ_onedr...</msg>
+<var>${step_logs}</var>
+<arg>${test_case_id}</arg>
+<arg>${step_logs}</arg>
+<arg>${step_number}</arg>
+<arg>${status}</arg>
+<arg>${actual}</arg>
+<arg>${expected}</arg>
+<arg>${comments}</arg>
+<arg>${attachment}</arg>
+<status status="PASS" start="2026-01-20T13:50:03.129581" elapsed="0.349265"/>
+</kw>
+<return>
+<value>${step_logs}</value>
+<status status="PASS" start="2026-01-20T13:50:03.478846" elapsed="0.000000"/>
+</return>
+<msg time="2026-01-20T13:50:03.479846" level="INFO">${STEP_LOGS} = {'logs': [{'status': {'id': 601, 'name': 'PASSED'}, 'actual_result': 'Rimsys', 'expected_result': 'Expected ok', 'description': 'Step ran fine', 'test_step_id': 1313131674, 'attachment': 'D:\\QZ_onedr...</msg>
+<var>${STEP_LOGS}</var>
+<arg>${TEST_CASE_ID}</arg>
+<arg>${STEP_LOGS}</arg>
+<arg>2</arg>
+<arg>PASSED</arg>
+<arg>Settings page Loaded properly</arg>
+<arg>Expected ok</arg>
+<arg>Step ran fine</arg>
+<doc>Add a test step log to QTest for the current test case.</doc>
+<status status="PASS" start="2026-01-20T13:50:02.704737" elapsed="0.775109"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2026-01-20T13:50:03.480847" level="INFO">Typing text 'legal' into text field 'xpath=//*[@id="search"]'.</msg>
+<arg>${LABEL_ALIASES_SEARCH_INPUT}</arg>
+<arg>${searchcriteria}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2026-01-20T13:50:03.479846" elapsed="0.210596"/>
+</kw>
+<kw name="Press Keys" owner="SeleniumLibrary">
+<msg time="2026-01-20T13:50:03.691468" level="INFO">Sending key(s) ('ENTER',) to xpath=//*[@id="search"] element.</msg>
+<msg time="2026-01-20T13:50:04.005964" level="INFO">Pressing special key ENTER to element.</msg>
+<msg time="2026-01-20T13:50:04.005964" level="INFO">Releasing special key ENTER.</msg>
+<arg>${LABEL_ALIASES_SEARCH_INPUT}</arg>
+<arg>ENTER</arg>
+<doc>Simulates the user pressing key(s) to an element or on the active browser.</doc>
+<status status="PASS" start="2026-01-20T13:50:03.691468" elapsed="0.341451"/>
+</kw>
+<kw name="ADD STEP LOG TO QTEST" owner="common_keywords">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-01-20T13:50:04.038020" level="INFO">${attachment} = </msg>
+<var>${attachment}</var>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-01-20T13:50:04.037018" elapsed="0.001002"/>
+</kw>
+<if>
+<branch type="IF" condition="'${capture_screenshot}' == 'True'">
+<kw name="Create Directory" owner="OperatingSystem">
+<msg time="2026-01-20T13:50:04.039914" level="INFO" html="true">Directory '&lt;a href="file://D:\QZ_onedrive_dontDelete\OneDrive - QualiZeal\rimsys_qtest\screenshots"&gt;D:\QZ_onedrive_dontDelete\OneDrive - QualiZeal\rimsys_qtest\screenshots&lt;/a&gt;' already exists.</msg>
+<arg>${EXECDIR}${/}screenshots</arg>
+<doc>Creates the specified directory.</doc>
+<status status="PASS" start="2026-01-20T13:50:04.038916" elapsed="0.000998"/>
+</kw>
+<kw name="Get Current Date" owner="DateTime">
+<msg time="2026-01-20T13:50:04.040953" level="INFO">${timestamp} = 20260120_135004</msg>
+<var>${timestamp}</var>
+<arg>result_format=%Y%m%d_%H%M%S</arg>
+<doc>Returns current local or UTC time with an optional increment.</doc>
+<status status="PASS" start="2026-01-20T13:50:04.039914" elapsed="0.001039"/>
+</kw>
+<kw name="Replace String Using Regexp" owner="String">
+<msg time="2026-01-20T13:50:04.042018" level="INFO">${safe_name} = Validate_that_Admin_user_is_able_to_navigate_to_the_required_page_and_search_Label_Aliases</msg>
+<var>${safe_name}</var>
+<arg>${TEST_NAME}</arg>
+<arg>\\s+</arg>
+<arg>_</arg>
+<doc>Replaces ``pattern`` in the given ``string`` with ``replace_with``.</doc>
+<status status="PASS" start="2026-01-20T13:50:04.042018" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-01-20T13:50:04.045006" level="INFO">${filename} = step_Validate_that_Admin_user_is_able_to_navigate_to_the_required_page_and_search_Label_Aliases_3_20260120_135004.png</msg>
+<var>${filename}</var>
+<arg>${screenshot_prefix}_${safe_name}_${step_number}_${timestamp}.png</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-01-20T13:50:04.043026" elapsed="0.001980"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-01-20T13:50:04.047006" level="INFO">${attachment} = D:\QZ_onedrive_dontDelete\OneDrive - QualiZeal\rimsys_qtest\screenshots\step_Validate_that_Admin_user_is_able_to_navigate_to_the_required_page_and_search_Label_Aliases_3_20260120_135004.png</msg>
+<var>${attachment}</var>
+<arg>${EXECDIR}${/}screenshots${/}${filename}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-01-20T13:50:04.045006" elapsed="0.002000"/>
+</kw>
+<kw name="Capture Page Screenshot" owner="SeleniumLibrary">
+<msg time="2026-01-20T13:50:04.382238" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="../screenshots/step_Validate_that_Admin_user_is_able_to_navigate_to_the_required_page_and_search_Label_Aliases_3_20260120_135004.png"&gt;&lt;img src="../screenshots/step_Validate_that_Admin_user_is_able_to_navigate_to_the_required_page_and_search_Label_Aliases_3_20260120_135004.png" width="800px"&gt;&lt;/a&gt;</msg>
+<arg>${attachment}</arg>
+<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
+<status status="PASS" start="2026-01-20T13:50:04.048014" elapsed="0.334224"/>
+</kw>
+<status status="PASS" start="2026-01-20T13:50:04.038020" elapsed="0.344218"/>
+</branch>
+<status status="PASS" start="2026-01-20T13:50:04.038020" elapsed="0.344218"/>
+</if>
+<kw name="Append Qtest Test Step Log" owner="qtest_robot_library">
+<msg time="2026-01-20T13:50:04.699296" level="INFO">${step_logs} = {'logs': [{'status': {'id': 601, 'name': 'PASSED'}, 'actual_result': 'Rimsys', 'expected_result': 'Expected ok', 'description': 'Step ran fine', 'test_step_id': 1313131674, 'attachment': 'D:\\QZ_onedr...</msg>
+<var>${step_logs}</var>
+<arg>${test_case_id}</arg>
+<arg>${step_logs}</arg>
+<arg>${step_number}</arg>
+<arg>${status}</arg>
+<arg>${actual}</arg>
+<arg>${expected}</arg>
+<arg>${comments}</arg>
+<arg>${attachment}</arg>
+<status status="PASS" start="2026-01-20T13:50:04.383242" elapsed="0.316054"/>
+</kw>
+<return>
+<value>${step_logs}</value>
+<status status="PASS" start="2026-01-20T13:50:04.700245" elapsed="0.000000"/>
+</return>
+<msg time="2026-01-20T13:50:04.701289" level="INFO">${STEP_LOGS} = {'logs': [{'status': {'id': 601, 'name': 'PASSED'}, 'actual_result': 'Rimsys', 'expected_result': 'Expected ok', 'description': 'Step ran fine', 'test_step_id': 1313131674, 'attachment': 'D:\\QZ_onedr...</msg>
+<var>${STEP_LOGS}</var>
+<arg>${TEST_CASE_ID}</arg>
+<arg>${STEP_LOGS}</arg>
+<arg>3</arg>
+<arg>PASSED</arg>
+<arg>Search Result Loaded properly</arg>
+<arg>Expected ok</arg>
+<arg>Step ran fine</arg>
+<doc>Add a test step log to QTest for the current test case.</doc>
+<status status="PASS" start="2026-01-20T13:50:04.034000" elapsed="0.667289"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${LABEL_ALIASES_SEARCH_INPUT_RESULT}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-01-20T13:50:04.702256" elapsed="0.036786"/>
+</kw>
+<msg time="2026-01-20T13:50:04.739042" level="INFO">${DATAavailable} = True</msg>
+<var>${DATAavailable}</var>
+<arg>Wait Until Element Is Visible</arg>
+<arg>${LABEL_ALIASES_SEARCH_INPUT_RESULT}</arg>
+<doc>Runs the specified keyword and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2026-01-20T13:50:04.701289" elapsed="0.037753"/>
+</kw>
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Element Should Not Be Visible" owner="SeleniumLibrary">
+<msg time="2026-01-20T13:50:04.770873" level="INFO">Element 'xpath=//*[text()="404 Not Found"]' did not exist.</msg>
+<arg>${PAGECONTAINS404}</arg>
+<doc>Verifies that the element identified by ``locator`` is NOT visible.</doc>
+<status status="PASS" start="2026-01-20T13:50:04.740080" elapsed="0.030793"/>
+</kw>
+<msg time="2026-01-20T13:50:04.771832" level="INFO">${Error404} = True</msg>
+<var>${Error404}</var>
+<arg>Element Should Not Be Visible</arg>
+<arg>${PAGECONTAINS404}</arg>
+<doc>Runs the specified keyword and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2026-01-20T13:50:04.739042" elapsed="0.032790"/>
+</kw>
+<if>
+<branch type="IF" condition="&quot;${DATAavailable}&quot; == &quot;True&quot; and &quot;${Error404}&quot; == &quot;True&quot;">
+<kw name="ADD STEP LOG TO QTEST" owner="common_keywords">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-01-20T13:50:04.773906" level="INFO">${attachment} = </msg>
+<var>${attachment}</var>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-01-20T13:50:04.773906" elapsed="0.000000"/>
+</kw>
+<if>
+<branch type="IF" condition="'${capture_screenshot}' == 'True'">
+<kw name="Create Directory" owner="OperatingSystem">
+<msg time="2026-01-20T13:50:04.775855" level="INFO" html="true">Directory '&lt;a href="file://D:\QZ_onedrive_dontDelete\OneDrive - QualiZeal\rimsys_qtest\screenshots"&gt;D:\QZ_onedrive_dontDelete\OneDrive - QualiZeal\rimsys_qtest\screenshots&lt;/a&gt;' already exists.</msg>
+<arg>${EXECDIR}${/}screenshots</arg>
+<doc>Creates the specified directory.</doc>
+<status status="PASS" start="2026-01-20T13:50:04.774910" elapsed="0.002009"/>
+</kw>
+<kw name="Get Current Date" owner="DateTime">
+<msg time="2026-01-20T13:50:04.777918" level="INFO">${timestamp} = 20260120_135004</msg>
+<var>${timestamp}</var>
+<arg>result_format=%Y%m%d_%H%M%S</arg>
+<doc>Returns current local or UTC time with an optional increment.</doc>
+<status status="PASS" start="2026-01-20T13:50:04.776919" elapsed="0.000999"/>
+</kw>
+<kw name="Replace String Using Regexp" owner="String">
+<msg time="2026-01-20T13:50:04.778914" level="INFO">${safe_name} = Validate_that_Admin_user_is_able_to_navigate_to_the_required_page_and_search_Label_Aliases</msg>
+<var>${safe_name}</var>
+<arg>${TEST_NAME}</arg>
+<arg>\\s+</arg>
+<arg>_</arg>
+<doc>Replaces ``pattern`` in the given ``string`` with ``replace_with``.</doc>
+<status status="PASS" start="2026-01-20T13:50:04.777918" elapsed="0.000996"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-01-20T13:50:04.780928" level="INFO">${filename} = step_Validate_that_Admin_user_is_able_to_navigate_to_the_required_page_and_search_Label_Aliases_4_20260120_135004.png</msg>
+<var>${filename}</var>
+<arg>${screenshot_prefix}_${safe_name}_${step_number}_${timestamp}.png</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-01-20T13:50:04.779934" elapsed="0.000994"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-01-20T13:50:04.781923" level="INFO">${attachment} = D:\QZ_onedrive_dontDelete\OneDrive - QualiZeal\rimsys_qtest\screenshots\step_Validate_that_Admin_user_is_able_to_navigate_to_the_required_page_and_search_Label_Aliases_4_20260120_135004.png</msg>
+<var>${attachment}</var>
+<arg>${EXECDIR}${/}screenshots${/}${filename}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-01-20T13:50:04.780928" elapsed="0.001994"/>
+</kw>
+<kw name="Capture Page Screenshot" owner="SeleniumLibrary">
+<msg time="2026-01-20T13:50:05.011606" level="INFO" html="true">&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan="3"&gt;&lt;a href="../screenshots/step_Validate_that_Admin_user_is_able_to_navigate_to_the_required_page_and_search_Label_Aliases_4_20260120_135004.png"&gt;&lt;img src="../screenshots/step_Validate_that_Admin_user_is_able_to_navigate_to_the_required_page_and_search_Label_Aliases_4_20260120_135004.png" width="800px"&gt;&lt;/a&gt;</msg>
+<arg>${attachment}</arg>
+<doc>Takes a screenshot of the current page and embeds it into a log file.</doc>
+<status status="PASS" start="2026-01-20T13:50:04.782922" elapsed="0.229688"/>
+</kw>
+<status status="PASS" start="2026-01-20T13:50:04.773906" elapsed="0.238704"/>
+</branch>
+<status status="PASS" start="2026-01-20T13:50:04.773906" elapsed="0.238704"/>
+</if>
+<kw name="Append Qtest Test Step Log" owner="qtest_robot_library">
+<msg time="2026-01-20T13:50:05.333820" level="INFO">${step_logs} = {'logs': [{'status': {'id': 601, 'name': 'PASSED'}, 'actual_result': 'Rimsys', 'expected_result': 'Expected ok', 'description': 'Step ran fine', 'test_step_id': 1313131674, 'attachment': 'D:\\QZ_onedr...</msg>
+<var>${step_logs}</var>
+<arg>${test_case_id}</arg>
+<arg>${step_logs}</arg>
+<arg>${step_number}</arg>
+<arg>${status}</arg>
+<arg>${actual}</arg>
+<arg>${expected}</arg>
+<arg>${comments}</arg>
+<arg>${attachment}</arg>
+<status status="PASS" start="2026-01-20T13:50:05.012610" elapsed="0.321210"/>
+</kw>
+<return>
+<value>${step_logs}</value>
+<status status="PASS" start="2026-01-20T13:50:05.333820" elapsed="0.000000"/>
+</return>
+<msg time="2026-01-20T13:50:05.333820" level="INFO">${STEP_LOGS} = {'logs': [{'status': {'id': 601, 'name': 'PASSED'}, 'actual_result': 'Rimsys', 'expected_result': 'Expected ok', 'description': 'Step ran fine', 'test_step_id': 1313131674, 'attachment': 'D:\\QZ_onedr...</msg>
+<var>${STEP_LOGS}</var>
+<arg>${TEST_CASE_ID}</arg>
+<arg>${STEP_LOGS}</arg>
+<arg>4</arg>
+<arg>PASSED</arg>
+<arg>No 404</arg>
+<arg>Expected ok</arg>
+<arg>Step ran fine</arg>
+<doc>Add a test step log to QTest for the current test case.</doc>
+<status status="PASS" start="2026-01-20T13:50:04.772930" elapsed="0.561896"/>
+</kw>
+<status status="PASS" start="2026-01-20T13:50:04.771832" elapsed="0.562994"/>
+</branch>
+<branch type="ELSE">
+<kw name="ADD STEP LOG TO QTEST" owner="common_keywords">
+<var>${STEP_LOGS}</var>
+<arg>${TEST_CASE_ID}</arg>
+<arg>${STEP_LOGS}</arg>
+<arg>4</arg>
+<arg>FAILED</arg>
+<arg>Error 404</arg>
+<arg>Expected ok</arg>
+<arg>Step ran fine</arg>
+<doc>Add a test step log to QTest for the current test case.</doc>
+<status status="NOT RUN" start="2026-01-20T13:50:05.334826" elapsed="0.001178"/>
+</kw>
+<status status="NOT RUN" start="2026-01-20T13:50:05.334826" elapsed="0.001178"/>
+</branch>
+<status status="PASS" start="2026-01-20T13:50:04.771832" elapsed="0.564172"/>
+</if>
+<arg>legal</arg>
+<status status="PASS" start="2026-01-20T13:50:02.702898" elapsed="2.633106"/>
+</kw>
+<kw name="Run Keywords" owner="BuiltIn" type="TEARDOWN">
+<kw name="Report Test Result">
+<kw name="Get Test Status">
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="Should Be True" owner="BuiltIn">
+<arg>True</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" start="2026-01-20T13:50:05.340046" elapsed="0.000000"/>
+</kw>
+<msg time="2026-01-20T13:50:05.340046" level="INFO">${status} = True</msg>
+<var>${status}</var>
+<arg>Should Be True</arg>
+<arg>True</arg>
+<doc>Runs the specified keyword and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2026-01-20T13:50:05.339043" elapsed="0.002088"/>
+</kw>
+<kw name="Set Variable If" owner="BuiltIn">
+<msg time="2026-01-20T13:50:05.341131" level="INFO">${result} = PASSED</msg>
+<var>${result}</var>
+<arg>${status}</arg>
+<arg>PASSED</arg>
+<arg>FAILED</arg>
+<doc>Sets variable based on the given condition.</doc>
+<status status="PASS" start="2026-01-20T13:50:05.341131" elapsed="0.000000"/>
+</kw>
+<kw name="Return From Keyword" owner="BuiltIn">
+<msg time="2026-01-20T13:50:05.342145" level="INFO">Returning from the enclosing user keyword.</msg>
+<arg>${result}</arg>
+<doc>Returns from the enclosing user keyword.</doc>
+<status status="PASS" start="2026-01-20T13:50:05.342145" elapsed="0.000000"/>
+</kw>
+<msg time="2026-01-20T13:50:05.342145" level="INFO">${status} = PASSED</msg>
+<var>${status}</var>
+<doc>Get current test status (PASSED/FAILED)</doc>
+<status status="PASS" start="2026-01-20T13:50:05.338046" elapsed="0.004099"/>
+</kw>
+<kw name="Get Test Message">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-01-20T13:50:05.344145" level="INFO">${message} = Test executed via Robot Framework</msg>
+<var>${message}</var>
+<arg>Test executed via Robot Framework</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-01-20T13:50:05.343088" elapsed="0.001057"/>
+</kw>
+<kw name="Return From Keyword" owner="BuiltIn">
+<msg time="2026-01-20T13:50:05.345048" level="INFO">Returning from the enclosing user keyword.</msg>
+<arg>${message}</arg>
+<doc>Returns from the enclosing user keyword.</doc>
+<status status="PASS" start="2026-01-20T13:50:05.344145" elapsed="0.000903"/>
+</kw>
+<msg time="2026-01-20T13:50:05.345048" level="INFO">${message} = Test executed via Robot Framework</msg>
+<var>${message}</var>
+<doc>Get test execution message</doc>
+<status status="PASS" start="2026-01-20T13:50:05.343088" elapsed="0.001960"/>
+</kw>
+<kw name="Get Test Execution Time">
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-01-20T13:50:05.347043" level="INFO">${time_ms} = 3000</msg>
+<var>${time_ms}</var>
+<arg>3000</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-01-20T13:50:05.346044" elapsed="0.000999"/>
+</kw>
+<kw name="Return From Keyword" owner="BuiltIn">
+<msg time="2026-01-20T13:50:05.347043" level="INFO">Returning from the enclosing user keyword.</msg>
+<arg>${time_ms}</arg>
+<doc>Returns from the enclosing user keyword.</doc>
+<status status="PASS" start="2026-01-20T13:50:05.347043" elapsed="0.000000"/>
+</kw>
+<msg time="2026-01-20T13:50:05.347043" level="INFO">${execution_time} = 3000</msg>
+<var>${execution_time}</var>
+<doc>Get test execution time in milliseconds</doc>
+<status status="PASS" start="2026-01-20T13:50:05.346044" elapsed="0.000999"/>
+</kw>
+<kw name="Get Test Execution Start">
+<kw name="Get Current Date" owner="DateTime">
+<msg time="2026-01-20T13:50:05.349076" level="INFO">${start} = 2026-01-20T13:50:05+00:00</msg>
+<var>${start}</var>
+<arg>result_format=%Y-%m-%dT%H:%M:%S+00:00</arg>
+<doc>Returns current local or UTC time with an optional increment.</doc>
+<status status="PASS" start="2026-01-20T13:50:05.349076" elapsed="0.000000"/>
+</kw>
+<kw name="Return From Keyword" owner="BuiltIn">
+<msg time="2026-01-20T13:50:05.350058" level="INFO">Returning from the enclosing user keyword.</msg>
+<arg>${start}</arg>
+<doc>Returns from the enclosing user keyword.</doc>
+<status status="PASS" start="2026-01-20T13:50:05.350058" elapsed="0.000986"/>
+</kw>
+<msg time="2026-01-20T13:50:05.351044" level="INFO">${exe_start} = 2026-01-20T13:50:05+00:00</msg>
+<var>${exe_start}</var>
+<doc>Get test execution start timestamp (ISO 8601)</doc>
+<status status="PASS" start="2026-01-20T13:50:05.348121" elapsed="0.003923"/>
+</kw>
+<kw name="Get Test Execution End">
+<kw name="Get Current Date" owner="DateTime">
+<msg time="2026-01-20T13:50:05.353043" level="INFO">${end} = 2026-01-20T13:50:05+00:00</msg>
+<var>${end}</var>
+<arg>result_format=%Y-%m-%dT%H:%M:%S+00:00</arg>
+<doc>Returns current local or UTC time with an optional increment.</doc>
+<status status="PASS" start="2026-01-20T13:50:05.353043" elapsed="0.000000"/>
+</kw>
+<kw name="Return From Keyword" owner="BuiltIn">
+<msg time="2026-01-20T13:50:05.354089" level="INFO">Returning from the enclosing user keyword.</msg>
+<arg>${end}</arg>
+<doc>Returns from the enclosing user keyword.</doc>
+<status status="PASS" start="2026-01-20T13:50:05.353043" elapsed="0.001046"/>
+</kw>
+<msg time="2026-01-20T13:50:05.354089" level="INFO">${exe_end} = 2026-01-20T13:50:05+00:00</msg>
+<var>${exe_end}</var>
+<doc>Get test execution end timestamp (ISO 8601)</doc>
+<status status="PASS" start="2026-01-20T13:50:05.352044" elapsed="0.002045"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2026-01-20T13:50:05.354089" level="INFO">Reporting result to QTest: PASSED</msg>
+<arg>Reporting result to QTest: ${status}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2026-01-20T13:50:05.354089" elapsed="0.001354"/>
+</kw>
+<kw name="Report Qtest Result" owner="qtest_robot_library">
+<msg time="2026-01-20T13:50:05.356451" level="INFO">Approving test case ID: 56304588</msg>
+<msg time="2026-01-20T13:50:05.714801" level="INFO">Approved test case ID 56304588</msg>
+<msg time="2026-01-20T13:50:06.073303" level="INFO">Updating test result for test case 56304588 in run 473422810</msg>
+<msg time="2026-01-20T13:50:06.904530" level="INFO">Test result updated successfully. Test log ID: 1114761062</msg>
+<msg time="2026-01-20T13:50:10.221291" level="INFO">Test result reported: Test Case 56304588 - PASSED</msg>
+<arg>test_run_id=${TEST_RUN_ID}</arg>
+<arg>test_case_id=${TEST_CASE_ID}</arg>
+<arg>status=${status}</arg>
+<arg>steplogs=${STEP_LOGS}</arg>
+<arg>message=${message}</arg>
+<arg>execution_time=${execution_time}</arg>
+<arg>exe_start_date=${exe_start}</arg>
+<arg>exe_end_date=${exe_end}</arg>
+<status status="PASS" start="2026-01-20T13:50:05.355443" elapsed="4.865848"/>
+</kw>
+<doc>Report test result to QTest</doc>
+<status status="PASS" start="2026-01-20T13:50:05.337035" elapsed="4.885335"/>
+</kw>
+<kw name="Close All Browsers" owner="SeleniumLibrary">
+<doc>Closes all open browsers and resets the browser cache.</doc>
+<status status="PASS" start="2026-01-20T13:50:10.222370" elapsed="2.532773"/>
+</kw>
+<arg>Report Test Result</arg>
+<arg>AND</arg>
+<arg>Close All Browsers</arg>
+<doc>Executes all the given keywords in a sequence.</doc>
+<status status="PASS" start="2026-01-20T13:50:05.336004" elapsed="7.419139"/>
+</kw>
+<doc>Test functionality for Label Aliases with valid credentials</doc>
+<tag>critical</tag>
+<tag>login</tag>
+<tag>smoke</tag>
+<status status="PASS" start="2026-01-20T13:47:20.436132" elapsed="172.319011"/>
+</test>
+<test id="s1-t2" name="Validate that Admin user is able to navigate to the required page and search Read-only Fields" line="40">
+<kw name="Run Keywords" owner="BuiltIn" type="SETUP">
+<kw name="Read Env And Set Credentials" owner="common_keywords">
+<kw name="Run Keyword And Return Status" owner="BuiltIn">
+<kw name="File Should Exist" owner="OperatingSystem">
+<msg time="2026-01-20T13:50:12.755143" level="INFO" html="true">File '&lt;a href="file://D:\QZ_onedrive_dontDelete\OneDrive - QualiZeal\rimsys_qtest\.env"&gt;D:\QZ_onedrive_dontDelete\OneDrive - QualiZeal\rimsys_qtest\.env&lt;/a&gt;' exists.</msg>
+<arg>${env_path}</arg>
+<doc>Fails unless the given ``path`` points to an existing file.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.755143" elapsed="0.000000"/>
+</kw>
+<msg time="2026-01-20T13:50:12.755143" level="INFO">${exists} = True</msg>
+<var>${exists}</var>
+<arg>File Should Exist</arg>
+<arg>${env_path}</arg>
+<doc>Runs the specified keyword and returns the status as a Boolean value.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.755143" elapsed="0.000000"/>
+</kw>
+<if>
+<branch type="IF" condition="${exists}">
+<kw name="Get File" owner="OperatingSystem">
+<msg time="2026-01-20T13:50:12.755143" level="INFO" html="true">Getting file '&lt;a href="file://D:\QZ_onedrive_dontDelete\OneDrive - QualiZeal\rimsys_qtest\.env"&gt;D:\QZ_onedrive_dontDelete\OneDrive - QualiZeal\rimsys_qtest\.env&lt;/a&gt;'.</msg>
+<msg time="2026-01-20T13:50:12.766208" level="INFO">${content} = # QTest Configuration
+QTEST_URL=https://rimsys.qtestnet.com
+QTEST_API_TOKEN=Bearer f198e3a4-e9c5-4ed6-b1dc-596200e4164f
+QTEST_PROJECT_ID=115899
+APP_URL=https://rimcentral5.rimsys.io
+APP_USERNAME=santo...</msg>
+<var>${content}</var>
+<arg>${env_path}</arg>
+<doc>Returns the contents of a specified file.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.755143" elapsed="0.011065"/>
+</kw>
+<kw name="Split To Lines" owner="String">
+<msg time="2026-01-20T13:50:12.766208" level="INFO">8 lines returned.</msg>
+<msg time="2026-01-20T13:50:12.766208" level="INFO">${lines} = ['# QTest Configuration', 'QTEST_URL=https://rimsys.qtestnet.com', 'QTEST_API_TOKEN=Bearer f198e3a4-e9c5-4ed6-b1dc-596200e4164f', 'QTEST_PROJECT_ID=115899', 'APP_URL=https://rimcentral5.rimsys.io', 'A...</msg>
+<var>${lines}</var>
+<arg>${content}</arg>
+<doc>Splits the given string to lines.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.766208" elapsed="0.000000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-01-20T13:50:12.766208" level="INFO">${env} = {}</msg>
+<var>${env}</var>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.766208" elapsed="0.000000"/>
+</kw>
+<for flavor="IN">
+<iter>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:50:12.768218" level="INFO">${stripped} = # QTest Configuration</msg>
+<var>${stripped}</var>
+<arg>${line}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.766208" elapsed="0.002010"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>'${stripped}' == ''</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.768218" elapsed="0.000000"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2026-01-20T13:50:12.768218" level="INFO">${firstchar} = #</msg>
+<var>${firstchar}</var>
+<arg>${stripped}</arg>
+<arg>0</arg>
+<arg>1</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.768218" elapsed="0.000000"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<msg time="2026-01-20T13:50:12.770857" level="INFO">Continuing for loop from the next iteration.</msg>
+<arg>'${firstchar}' == '#'</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.770857" elapsed="0.000000"/>
+</kw>
+<kw name="Split String" owner="String">
+<var>${parts}</var>
+<arg>${stripped}</arg>
+<arg>=</arg>
+<arg>1</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<status status="NOT RUN" start="2026-01-20T13:50:12.770857" elapsed="0.002008"/>
+</kw>
+<kw name="Get Length" owner="BuiltIn">
+<var>${plen}</var>
+<arg>${parts}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<status status="NOT RUN" start="2026-01-20T13:50:12.772865" elapsed="0.000000"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>${plen} &lt; 2</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="NOT RUN" start="2026-01-20T13:50:12.772865" elapsed="0.000000"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<var>${key}</var>
+<arg>${parts}</arg>
+<arg>0</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="NOT RUN" start="2026-01-20T13:50:12.772865" elapsed="0.000000"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<var>${val}</var>
+<arg>${parts}</arg>
+<arg>1</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="NOT RUN" start="2026-01-20T13:50:12.772865" elapsed="0.000000"/>
+</kw>
+<kw name="Strip String" owner="String">
+<var>${key}</var>
+<arg>${key}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="NOT RUN" start="2026-01-20T13:50:12.772865" elapsed="0.000000"/>
+</kw>
+<kw name="Strip String" owner="String">
+<var>${val}</var>
+<arg>${val}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="NOT RUN" start="2026-01-20T13:50:12.772865" elapsed="0.000000"/>
+</kw>
+<kw name="Set Environment Variable" owner="OperatingSystem">
+<arg>${key}</arg>
+<arg>${val}</arg>
+<doc>Sets an environment variable to a specified value.</doc>
+<status status="NOT RUN" start="2026-01-20T13:50:12.772865" elapsed="0.000000"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${env}</arg>
+<arg>${key}</arg>
+<arg>${val}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="NOT RUN" start="2026-01-20T13:50:12.772865" elapsed="0.000000"/>
+</kw>
+<var name="${line}"># QTest Configuration</var>
+<status status="PASS" start="2026-01-20T13:50:12.766208" elapsed="0.006657"/>
+</iter>
+<iter>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:50:12.772865" level="INFO">${stripped} = QTEST_URL=https://rimsys.qtestnet.com</msg>
+<var>${stripped}</var>
+<arg>${line}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.772865" elapsed="0.000000"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>'${stripped}' == ''</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.772865" elapsed="0.000000"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2026-01-20T13:50:12.772865" level="INFO">${firstchar} = Q</msg>
+<var>${firstchar}</var>
+<arg>${stripped}</arg>
+<arg>0</arg>
+<arg>1</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.772865" elapsed="0.000000"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>'${firstchar}' == '#'</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.772865" elapsed="0.000000"/>
+</kw>
+<kw name="Split String" owner="String">
+<msg time="2026-01-20T13:50:12.772865" level="INFO">${parts} = ['QTEST_URL', 'https://rimsys.qtestnet.com']</msg>
+<var>${parts}</var>
+<arg>${stripped}</arg>
+<arg>=</arg>
+<arg>1</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.772865" elapsed="0.000000"/>
+</kw>
+<kw name="Get Length" owner="BuiltIn">
+<msg time="2026-01-20T13:50:12.772865" level="INFO">Length is 2.</msg>
+<msg time="2026-01-20T13:50:12.772865" level="INFO">${plen} = 2</msg>
+<var>${plen}</var>
+<arg>${parts}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.772865" elapsed="0.000000"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>${plen} &lt; 2</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.772865" elapsed="0.000000"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2026-01-20T13:50:12.772865" level="INFO">${key} = QTEST_URL</msg>
+<var>${key}</var>
+<arg>${parts}</arg>
+<arg>0</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.772865" elapsed="0.000000"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2026-01-20T13:50:12.772865" level="INFO">${val} = https://rimsys.qtestnet.com</msg>
+<var>${val}</var>
+<arg>${parts}</arg>
+<arg>1</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.772865" elapsed="0.000000"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:50:12.772865" level="INFO">${key} = QTEST_URL</msg>
+<var>${key}</var>
+<arg>${key}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.772865" elapsed="0.000000"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:50:12.772865" level="INFO">${val} = https://rimsys.qtestnet.com</msg>
+<var>${val}</var>
+<arg>${val}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.772865" elapsed="0.000000"/>
+</kw>
+<kw name="Set Environment Variable" owner="OperatingSystem">
+<msg time="2026-01-20T13:50:12.772865" level="INFO">Environment variable 'QTEST_URL' set to value 'https://rimsys.qtestnet.com'.</msg>
+<arg>${key}</arg>
+<arg>${val}</arg>
+<doc>Sets an environment variable to a specified value.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.772865" elapsed="0.000000"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${env}</arg>
+<arg>${key}</arg>
+<arg>${val}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.772865" elapsed="0.000000"/>
+</kw>
+<var name="${line}">QTEST_URL=https://rimsys.qtestnet.com</var>
+<status status="PASS" start="2026-01-20T13:50:12.772865" elapsed="0.000000"/>
+</iter>
+<iter>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:50:12.787192" level="INFO">${stripped} = QTEST_API_TOKEN=Bearer f198e3a4-e9c5-4ed6-b1dc-596200e4164f</msg>
+<var>${stripped}</var>
+<arg>${line}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.786599" elapsed="0.000593"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>'${stripped}' == ''</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.788519" elapsed="0.000000"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2026-01-20T13:50:12.790394" level="INFO">${firstchar} = Q</msg>
+<var>${firstchar}</var>
+<arg>${stripped}</arg>
+<arg>0</arg>
+<arg>1</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.790394" elapsed="0.000000"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>'${firstchar}' == '#'</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.790394" elapsed="0.001271"/>
+</kw>
+<kw name="Split String" owner="String">
+<msg time="2026-01-20T13:50:12.791665" level="INFO">${parts} = ['QTEST_API_TOKEN', 'Bearer f198e3a4-e9c5-4ed6-b1dc-596200e4164f']</msg>
+<var>${parts}</var>
+<arg>${stripped}</arg>
+<arg>=</arg>
+<arg>1</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.791665" elapsed="0.000000"/>
+</kw>
+<kw name="Get Length" owner="BuiltIn">
+<msg time="2026-01-20T13:50:12.791665" level="INFO">Length is 2.</msg>
+<msg time="2026-01-20T13:50:12.791665" level="INFO">${plen} = 2</msg>
+<var>${plen}</var>
+<arg>${parts}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.791665" elapsed="0.000000"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>${plen} &lt; 2</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.793675" elapsed="0.000000"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2026-01-20T13:50:12.793675" level="INFO">${key} = QTEST_API_TOKEN</msg>
+<var>${key}</var>
+<arg>${parts}</arg>
+<arg>0</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.793675" elapsed="0.000000"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2026-01-20T13:50:12.793675" level="INFO">${val} = Bearer f198e3a4-e9c5-4ed6-b1dc-596200e4164f</msg>
+<var>${val}</var>
+<arg>${parts}</arg>
+<arg>1</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.793675" elapsed="0.000000"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:50:12.793675" level="INFO">${key} = QTEST_API_TOKEN</msg>
+<var>${key}</var>
+<arg>${key}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.793675" elapsed="0.000000"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:50:12.793675" level="INFO">${val} = Bearer f198e3a4-e9c5-4ed6-b1dc-596200e4164f</msg>
+<var>${val}</var>
+<arg>${val}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.793675" elapsed="0.000000"/>
+</kw>
+<kw name="Set Environment Variable" owner="OperatingSystem">
+<msg time="2026-01-20T13:50:12.793675" level="INFO">Environment variable 'QTEST_API_TOKEN' set to value 'Bearer f198e3a4-e9c5-4ed6-b1dc-596200e4164f'.</msg>
+<arg>${key}</arg>
+<arg>${val}</arg>
+<doc>Sets an environment variable to a specified value.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.793675" elapsed="0.000000"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${env}</arg>
+<arg>${key}</arg>
+<arg>${val}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.793675" elapsed="0.000000"/>
+</kw>
+<var name="${line}">QTEST_API_TOKEN=Bearer f198e3a4-e9c5-4ed6-b1dc-596200e4164f</var>
+<status status="PASS" start="2026-01-20T13:50:12.772865" elapsed="0.020810"/>
+</iter>
+<iter>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:50:12.793675" level="INFO">${stripped} = QTEST_PROJECT_ID=115899</msg>
+<var>${stripped}</var>
+<arg>${line}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.793675" elapsed="0.000000"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>'${stripped}' == ''</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.793675" elapsed="0.000000"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2026-01-20T13:50:12.793675" level="INFO">${firstchar} = Q</msg>
+<var>${firstchar}</var>
+<arg>${stripped}</arg>
+<arg>0</arg>
+<arg>1</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.793675" elapsed="0.000000"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>'${firstchar}' == '#'</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.793675" elapsed="0.000000"/>
+</kw>
+<kw name="Split String" owner="String">
+<msg time="2026-01-20T13:50:12.793675" level="INFO">${parts} = ['QTEST_PROJECT_ID', '115899']</msg>
+<var>${parts}</var>
+<arg>${stripped}</arg>
+<arg>=</arg>
+<arg>1</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.793675" elapsed="0.000000"/>
+</kw>
+<kw name="Get Length" owner="BuiltIn">
+<msg time="2026-01-20T13:50:12.793675" level="INFO">Length is 2.</msg>
+<msg time="2026-01-20T13:50:12.793675" level="INFO">${plen} = 2</msg>
+<var>${plen}</var>
+<arg>${parts}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.793675" elapsed="0.000000"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>${plen} &lt; 2</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.793675" elapsed="0.008751"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2026-01-20T13:50:12.802426" level="INFO">${key} = QTEST_PROJECT_ID</msg>
+<var>${key}</var>
+<arg>${parts}</arg>
+<arg>0</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.802426" elapsed="0.000000"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2026-01-20T13:50:12.804813" level="INFO">${val} = 115899</msg>
+<var>${val}</var>
+<arg>${parts}</arg>
+<arg>1</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.804297" elapsed="0.000516"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:50:12.805438" level="INFO">${key} = QTEST_PROJECT_ID</msg>
+<var>${key}</var>
+<arg>${key}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.805438" elapsed="0.000563"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:50:12.806557" level="INFO">${val} = 115899</msg>
+<var>${val}</var>
+<arg>${val}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.806557" elapsed="0.000000"/>
+</kw>
+<kw name="Set Environment Variable" owner="OperatingSystem">
+<msg time="2026-01-20T13:50:12.806557" level="INFO">Environment variable 'QTEST_PROJECT_ID' set to value '115899'.</msg>
+<arg>${key}</arg>
+<arg>${val}</arg>
+<doc>Sets an environment variable to a specified value.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.806557" elapsed="0.000000"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${env}</arg>
+<arg>${key}</arg>
+<arg>${val}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.806557" elapsed="0.000000"/>
+</kw>
+<var name="${line}">QTEST_PROJECT_ID=115899</var>
+<status status="PASS" start="2026-01-20T13:50:12.793675" elapsed="0.012882"/>
+</iter>
+<iter>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:50:12.806557" level="INFO">${stripped} = APP_URL=https://rimcentral5.rimsys.io</msg>
+<var>${stripped}</var>
+<arg>${line}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.806557" elapsed="0.000000"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>'${stripped}' == ''</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.806557" elapsed="0.000000"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2026-01-20T13:50:12.811907" level="INFO">${firstchar} = A</msg>
+<var>${firstchar}</var>
+<arg>${stripped}</arg>
+<arg>0</arg>
+<arg>1</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.811907" elapsed="0.000798"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>'${firstchar}' == '#'</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.812705" elapsed="0.000000"/>
+</kw>
+<kw name="Split String" owner="String">
+<msg time="2026-01-20T13:50:12.812705" level="INFO">${parts} = ['APP_URL', 'https://rimcentral5.rimsys.io']</msg>
+<var>${parts}</var>
+<arg>${stripped}</arg>
+<arg>=</arg>
+<arg>1</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.812705" elapsed="0.000000"/>
+</kw>
+<kw name="Get Length" owner="BuiltIn">
+<msg time="2026-01-20T13:50:12.812705" level="INFO">Length is 2.</msg>
+<msg time="2026-01-20T13:50:12.812705" level="INFO">${plen} = 2</msg>
+<var>${plen}</var>
+<arg>${parts}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.812705" elapsed="0.000000"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>${plen} &lt; 2</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.812705" elapsed="0.000000"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2026-01-20T13:50:12.812705" level="INFO">${key} = APP_URL</msg>
+<var>${key}</var>
+<arg>${parts}</arg>
+<arg>0</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.812705" elapsed="0.000000"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2026-01-20T13:50:12.818232" level="INFO">${val} = https://rimcentral5.rimsys.io</msg>
+<var>${val}</var>
+<arg>${parts}</arg>
+<arg>1</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.812705" elapsed="0.005527"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:50:12.818232" level="INFO">${key} = APP_URL</msg>
+<var>${key}</var>
+<arg>${key}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.818232" elapsed="0.000000"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:50:12.818232" level="INFO">${val} = https://rimcentral5.rimsys.io</msg>
+<var>${val}</var>
+<arg>${val}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.818232" elapsed="0.000000"/>
+</kw>
+<kw name="Set Environment Variable" owner="OperatingSystem">
+<msg time="2026-01-20T13:50:12.818232" level="INFO">Environment variable 'APP_URL' set to value 'https://rimcentral5.rimsys.io'.</msg>
+<arg>${key}</arg>
+<arg>${val}</arg>
+<doc>Sets an environment variable to a specified value.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.818232" elapsed="0.000000"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${env}</arg>
+<arg>${key}</arg>
+<arg>${val}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.818232" elapsed="0.000000"/>
+</kw>
+<var name="${line}">APP_URL=https://rimcentral5.rimsys.io</var>
+<status status="PASS" start="2026-01-20T13:50:12.806557" elapsed="0.011675"/>
+</iter>
+<iter>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:50:12.818232" level="INFO">${stripped} = APP_USERNAME=santosh.mangalapalli@rimsys.io</msg>
+<var>${stripped}</var>
+<arg>${line}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.818232" elapsed="0.000000"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>'${stripped}' == ''</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.818232" elapsed="0.000000"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2026-01-20T13:50:12.818232" level="INFO">${firstchar} = A</msg>
+<var>${firstchar}</var>
+<arg>${stripped}</arg>
+<arg>0</arg>
+<arg>1</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.818232" elapsed="0.000000"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>'${firstchar}' == '#'</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.818232" elapsed="0.000000"/>
+</kw>
+<kw name="Split String" owner="String">
+<msg time="2026-01-20T13:50:12.818232" level="INFO">${parts} = ['APP_USERNAME', 'santosh.mangalapalli@rimsys.io']</msg>
+<var>${parts}</var>
+<arg>${stripped}</arg>
+<arg>=</arg>
+<arg>1</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.818232" elapsed="0.000000"/>
+</kw>
+<kw name="Get Length" owner="BuiltIn">
+<msg time="2026-01-20T13:50:12.818232" level="INFO">Length is 2.</msg>
+<msg time="2026-01-20T13:50:12.818232" level="INFO">${plen} = 2</msg>
+<var>${plen}</var>
+<arg>${parts}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.818232" elapsed="0.000000"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>${plen} &lt; 2</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.818232" elapsed="0.000000"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2026-01-20T13:50:12.818232" level="INFO">${key} = APP_USERNAME</msg>
+<var>${key}</var>
+<arg>${parts}</arg>
+<arg>0</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.818232" elapsed="0.000000"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2026-01-20T13:50:12.818232" level="INFO">${val} = santosh.mangalapalli@rimsys.io</msg>
+<var>${val}</var>
+<arg>${parts}</arg>
+<arg>1</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.818232" elapsed="0.000000"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:50:12.818232" level="INFO">${key} = APP_USERNAME</msg>
+<var>${key}</var>
+<arg>${key}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.818232" elapsed="0.000000"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:50:12.818232" level="INFO">${val} = santosh.mangalapalli@rimsys.io</msg>
+<var>${val}</var>
+<arg>${val}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.818232" elapsed="0.000000"/>
+</kw>
+<kw name="Set Environment Variable" owner="OperatingSystem">
+<msg time="2026-01-20T13:50:12.818232" level="INFO">Environment variable 'APP_USERNAME' set to value 'santosh.mangalapalli@rimsys.io'.</msg>
+<arg>${key}</arg>
+<arg>${val}</arg>
+<doc>Sets an environment variable to a specified value.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.818232" elapsed="0.000000"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${env}</arg>
+<arg>${key}</arg>
+<arg>${val}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.818232" elapsed="0.000000"/>
+</kw>
+<var name="${line}">APP_USERNAME=santosh.mangalapalli@rimsys.io</var>
+<status status="PASS" start="2026-01-20T13:50:12.818232" elapsed="0.000000"/>
+</iter>
+<iter>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:50:12.818232" level="INFO">${stripped} = APP_PASSWORD=Merc5@udi9Jag7</msg>
+<var>${stripped}</var>
+<arg>${line}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.818232" elapsed="0.000000"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>'${stripped}' == ''</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.818232" elapsed="0.000000"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2026-01-20T13:50:12.818232" level="INFO">${firstchar} = A</msg>
+<var>${firstchar}</var>
+<arg>${stripped}</arg>
+<arg>0</arg>
+<arg>1</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.818232" elapsed="0.000000"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>'${firstchar}' == '#'</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.818232" elapsed="0.000000"/>
+</kw>
+<kw name="Split String" owner="String">
+<msg time="2026-01-20T13:50:12.833995" level="INFO">${parts} = ['APP_PASSWORD', 'Merc5@udi9Jag7']</msg>
+<var>${parts}</var>
+<arg>${stripped}</arg>
+<arg>=</arg>
+<arg>1</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.833995" elapsed="0.000000"/>
+</kw>
+<kw name="Get Length" owner="BuiltIn">
+<msg time="2026-01-20T13:50:12.833995" level="INFO">Length is 2.</msg>
+<msg time="2026-01-20T13:50:12.833995" level="INFO">${plen} = 2</msg>
+<var>${plen}</var>
+<arg>${parts}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.833995" elapsed="0.000000"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>${plen} &lt; 2</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.833995" elapsed="0.000000"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2026-01-20T13:50:12.833995" level="INFO">${key} = APP_PASSWORD</msg>
+<var>${key}</var>
+<arg>${parts}</arg>
+<arg>0</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.833995" elapsed="0.000000"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2026-01-20T13:50:12.833995" level="INFO">${val} = Merc5@udi9Jag7</msg>
+<var>${val}</var>
+<arg>${parts}</arg>
+<arg>1</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.833995" elapsed="0.000000"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:50:12.833995" level="INFO">${key} = APP_PASSWORD</msg>
+<var>${key}</var>
+<arg>${key}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.833995" elapsed="0.000000"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:50:12.833995" level="INFO">${val} = Merc5@udi9Jag7</msg>
+<var>${val}</var>
+<arg>${val}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.833995" elapsed="0.000000"/>
+</kw>
+<kw name="Set Environment Variable" owner="OperatingSystem">
+<msg time="2026-01-20T13:50:12.833995" level="INFO">Environment variable 'APP_PASSWORD' set to value 'Merc5@udi9Jag7'.</msg>
+<arg>${key}</arg>
+<arg>${val}</arg>
+<doc>Sets an environment variable to a specified value.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.833995" elapsed="0.000000"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${env}</arg>
+<arg>${key}</arg>
+<arg>${val}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.833995" elapsed="0.000000"/>
+</kw>
+<var name="${line}">APP_PASSWORD=Merc5@udi9Jag7</var>
+<status status="PASS" start="2026-01-20T13:50:12.818232" elapsed="0.015763"/>
+</iter>
+<iter>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:50:12.841256" level="INFO">${stripped} = HEADLESS=True</msg>
+<var>${stripped}</var>
+<arg>${line}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.841256" elapsed="0.000000"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>'${stripped}' == ''</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.841256" elapsed="0.000000"/>
+</kw>
+<kw name="Get Substring" owner="String">
+<msg time="2026-01-20T13:50:12.841256" level="INFO">${firstchar} = H</msg>
+<var>${firstchar}</var>
+<arg>${stripped}</arg>
+<arg>0</arg>
+<arg>1</arg>
+<doc>Returns a substring from ``start`` index to ``end`` index.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.841256" elapsed="0.000000"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>'${firstchar}' == '#'</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.841256" elapsed="0.000000"/>
+</kw>
+<kw name="Split String" owner="String">
+<msg time="2026-01-20T13:50:12.841256" level="INFO">${parts} = ['HEADLESS', 'True']</msg>
+<var>${parts}</var>
+<arg>${stripped}</arg>
+<arg>=</arg>
+<arg>1</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.841256" elapsed="0.000000"/>
+</kw>
+<kw name="Get Length" owner="BuiltIn">
+<msg time="2026-01-20T13:50:12.841256" level="INFO">Length is 2.</msg>
+<msg time="2026-01-20T13:50:12.841256" level="INFO">${plen} = 2</msg>
+<var>${plen}</var>
+<arg>${parts}</arg>
+<doc>Returns and logs the length of the given item as an integer.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.841256" elapsed="0.000000"/>
+</kw>
+<kw name="Continue For Loop If" owner="BuiltIn">
+<arg>${plen} &lt; 2</arg>
+<doc>Skips the current FOR loop iteration if the ``condition`` is true.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.841256" elapsed="0.000000"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2026-01-20T13:50:12.841256" level="INFO">${key} = HEADLESS</msg>
+<var>${key}</var>
+<arg>${parts}</arg>
+<arg>0</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.841256" elapsed="0.000000"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2026-01-20T13:50:12.841256" level="INFO">${val} = True</msg>
+<var>${val}</var>
+<arg>${parts}</arg>
+<arg>1</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.841256" elapsed="0.000000"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:50:12.841256" level="INFO">${key} = HEADLESS</msg>
+<var>${key}</var>
+<arg>${key}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.841256" elapsed="0.000000"/>
+</kw>
+<kw name="Strip String" owner="String">
+<msg time="2026-01-20T13:50:12.841256" level="INFO">${val} = True</msg>
+<var>${val}</var>
+<arg>${val}</arg>
+<doc>Remove leading and/or trailing whitespaces from the given string.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.841256" elapsed="0.000000"/>
+</kw>
+<kw name="Set Environment Variable" owner="OperatingSystem">
+<msg time="2026-01-20T13:50:12.841256" level="INFO">Environment variable 'HEADLESS' set to value 'True'.</msg>
+<arg>${key}</arg>
+<arg>${val}</arg>
+<doc>Sets an environment variable to a specified value.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.841256" elapsed="0.000000"/>
+</kw>
+<kw name="Set To Dictionary" owner="Collections">
+<arg>${env}</arg>
+<arg>${key}</arg>
+<arg>${val}</arg>
+<doc>Adds the given ``key_value_pairs`` and/or ``items`` to the ``dictionary``.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.841256" elapsed="0.000000"/>
+</kw>
+<var name="${line}">HEADLESS=True</var>
+<status status="PASS" start="2026-01-20T13:50:12.841256" elapsed="0.000000"/>
+</iter>
+<var>${line}</var>
+<value>@{lines}</value>
+<status status="PASS" start="2026-01-20T13:50:12.766208" elapsed="0.075048"/>
+</for>
+<status status="PASS" start="2026-01-20T13:50:12.755143" elapsed="0.086113"/>
+</branch>
+<status status="PASS" start="2026-01-20T13:50:12.755143" elapsed="0.086113"/>
+</if>
+<kw name="Set Suite Variable" owner="BuiltIn">
+<msg time="2026-01-20T13:50:12.849919" level="INFO">${url} = https://rimcentral5.rimsys.io</msg>
+<arg>${url}</arg>
+<arg>${env.APP_URL}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.841256" elapsed="0.008663"/>
+</kw>
+<kw name="Set Suite Variable" owner="BuiltIn">
+<msg time="2026-01-20T13:50:12.849919" level="INFO">${username} = santosh.mangalapalli@rimsys.io</msg>
+<arg>${username}</arg>
+<arg>${env.APP_USERNAME}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.849919" elapsed="0.000000"/>
+</kw>
+<kw name="Set Suite Variable" owner="BuiltIn">
+<msg time="2026-01-20T13:50:12.853446" level="INFO">${password} = Merc5@udi9Jag7</msg>
+<arg>${password}</arg>
+<arg>${env.APP_PASSWORD}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.849919" elapsed="0.003527"/>
+</kw>
+<kw name="Set Suite Variable" owner="BuiltIn">
+<msg time="2026-01-20T13:50:12.855454" level="INFO">${headless} = True</msg>
+<arg>${headless}</arg>
+<arg>${env.HEADLESS}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.853446" elapsed="0.002008"/>
+</kw>
+<arg>${EXECDIR}${/}.env</arg>
+<doc>Read key=value pairs from a .env file and set suite variables for url/username/password.
+Keys expected: APP_URL, APP_USERNAME, APP_PASSWORD. Lines starting with # are ignored.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.755143" elapsed="0.100311"/>
+</kw>
+<kw name="Setup QTest Integration">
+<kw name="Get Current Date" owner="DateTime">
+<msg time="2026-01-20T13:50:12.857461" level="INFO">${date} = 2026-01-20 13:50</msg>
+<var>${date}</var>
+<arg>result_format=%Y-%m-%d %H:%M</arg>
+<doc>Returns current local or UTC time with an optional increment.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.855454" elapsed="0.002007"/>
+</kw>
+<kw name="Set Suite Variable" owner="BuiltIn">
+<msg time="2026-01-20T13:50:12.857461" level="INFO">${CURRENT_DATE} = 2026-01-20 13:50</msg>
+<arg>${CURRENT_DATE}</arg>
+<arg>${date}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.857461" elapsed="0.000000"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2026-01-20T13:50:12.857461" level="INFO">Initializing QTest Integration</msg>
+<arg>Initializing QTest Integration</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.857461" elapsed="0.000000"/>
+</kw>
+<kw name="Initialize Qtest Manager" owner="qtest_robot_library">
+<msg time="2026-01-20T13:50:12.859467" level="INFO">QTest Manager initialized</msg>
+<msg time="2026-01-20T13:50:12.859467" level="INFO">QTest Manager initialized with config: D:\QZ_onedrive_dontDelete\OneDrive - QualiZeal\rimsys_qtest\config.json</msg>
+<arg>${QTEST_CONFIG}</arg>
+<status status="PASS" start="2026-01-20T13:50:12.857461" elapsed="0.002006"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2026-01-20T13:50:12.859467" level="INFO">Creating test run in QTest</msg>
+<arg>Creating test run in QTest</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2026-01-20T13:50:12.859467" elapsed="0.000000"/>
+</kw>
+<kw name="Create Qtest Test Run" owner="qtest_robot_library">
+<msg time="2026-01-20T13:50:36.263045" level="INFO">Approving test case ID: 56304589</msg>
+<msg time="2026-01-20T13:50:36.632464" level="INFO">Approved test case ID 56304589</msg>
+<msg time="2026-01-20T13:50:37.020843" level="INFO">Ensuring test run: Robot Framework Test Run - TestDemo</msg>
+<msg time="2026-01-20T13:50:37.921592" level="INFO">Test run created successfully. ID: 473425745</msg>
+<msg time="2026-01-20T13:50:37.922701" level="INFO">Test run created: Robot Framework Test Run - TestDemo (ID: 473425745)</msg>
+<msg time="2026-01-20T13:50:37.922701" level="INFO">${test_run_id} = 473425745</msg>
+<var>${test_run_id}</var>
+<arg>name=${TEST_RUN_NAME}</arg>
+<arg>test_case_name=${TEST NAME}</arg>
+<arg>test_cycle_name=${TEST_CYCLE_NAME}</arg>
+<status status="PASS" start="2026-01-20T13:50:12.859467" elapsed="25.063234"/>
+</kw>
+<kw name="Set Suite Variable" owner="BuiltIn">
+<msg time="2026-01-20T13:50:37.924598" level="INFO">${TEST_RUN_ID} = 473425745</msg>
+<arg>${TEST_RUN_ID}</arg>
+<arg>${test_run_id}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<status status="PASS" start="2026-01-20T13:50:37.923707" elapsed="0.000891"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2026-01-20T13:50:37.926701" level="INFO">Test Run Created - ID: 473425745</msg>
+<arg>Test Run Created - ID: ${test_run_id}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2026-01-20T13:50:37.925644" elapsed="0.001057"/>
+</kw>
+<kw name="Get QTest Test Case ID">
+<kw name="Get Qtest Test Case Id By Name" owner="qtest_robot_library">
+<msg time="2026-01-20T13:51:05.489654" level="INFO">Resolved test case 'Validate that Admin user is able to navigate to the required page and search Read-only Fields' -&gt; ID 56304589</msg>
+<msg time="2026-01-20T13:51:05.489654" level="INFO">${test_case_id} = 56304589</msg>
+<var>${test_case_id}</var>
+<arg>${test_name}</arg>
+<status status="PASS" start="2026-01-20T13:50:37.928700" elapsed="27.560954"/>
+</kw>
+<kw name="Return From Keyword" owner="BuiltIn">
+<msg time="2026-01-20T13:51:05.489654" level="INFO">Returning from the enclosing user keyword.</msg>
+<arg>${test_case_id}</arg>
+<doc>Returns from the enclosing user keyword.</doc>
+<status status="PASS" start="2026-01-20T13:51:05.489654" elapsed="0.000000"/>
+</kw>
+<msg time="2026-01-20T13:51:05.489654" level="INFO">${test_case_id} = 56304589</msg>
+<var>${test_case_id}</var>
+<arg>${TEST_NAME}</arg>
+<doc>Map Robot Framework test name to QTest test case ID</doc>
+<status status="PASS" start="2026-01-20T13:50:37.926701" elapsed="27.562953"/>
+</kw>
+<kw name="Set Test Variable" owner="BuiltIn">
+<msg time="2026-01-20T13:51:05.489654" level="INFO">${TEST_CASE_ID} = 56304589</msg>
+<arg>${TEST_CASE_ID}</arg>
+<arg>${test_case_id}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<status status="PASS" start="2026-01-20T13:51:05.489654" elapsed="0.000000"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2026-01-20T13:51:05.489654" level="INFO">Test Case ID - 56304589</msg>
+<arg>Test Case ID - ${TEST_CASE_ID}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2026-01-20T13:51:05.489654" elapsed="0.000000"/>
+</kw>
+<doc>Initialize QTest integration and create test run</doc>
+<status status="PASS" start="2026-01-20T13:50:12.855454" elapsed="52.634200"/>
+</kw>
+<kw name="Log Test Start">
+<kw name="Log" owner="BuiltIn">
+<msg time="2026-01-20T13:51:05.489654" level="INFO">Starting test: Validate that Admin user is able to navigate to the required page and search Read-only Fields</msg>
+<arg>Starting test: ${TEST_NAME}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2026-01-20T13:51:05.489654" elapsed="0.000000"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-01-20T13:51:05.489654" level="INFO">${logs} = {}</msg>
+<var>${logs}</var>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-01-20T13:51:05.489654" elapsed="0.000000"/>
+</kw>
+<kw name="Set Test Variable" owner="BuiltIn">
+<msg time="2026-01-20T13:51:05.505855" level="INFO">${STEP_LOGS} = {}</msg>
+<arg>${STEP_LOGS}</arg>
+<arg>${logs}</arg>
+<doc>Makes a variable available everywhere within the scope of the current test.</doc>
+<status status="PASS" start="2026-01-20T13:51:05.489654" elapsed="0.016201"/>
+</kw>
+<doc>Log the start of each test</doc>
+<status status="PASS" start="2026-01-20T13:51:05.489654" elapsed="0.016201"/>
+</kw>
+<kw name="Login To Application" owner="common_keywords">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-01-20T13:51:05.505855" level="INFO">${CHROME_BINARY} = C:/Application/chrome.exe</msg>
+<var>${CHROME_BINARY}</var>
+<arg>C:/Application/chrome.exe</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-01-20T13:51:05.505855" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-01-20T13:51:05.505855" level="INFO">${CHROME_DRIVER} = C:/chrome-win64/chromedriver.exe</msg>
+<var>${CHROME_DRIVER}</var>
+<arg>C:/chrome-win64/chromedriver.exe</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-01-20T13:51:05.505855" elapsed="0.000000"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-01-20T13:51:05.505855" level="INFO">${options} = &lt;selenium.webdriver.chrome.options.Options object at 0x000002730821A950&gt;</msg>
+<var>${options}</var>
+<arg>sys.modules['selenium.webdriver'].ChromeOptions()</arg>
+<arg>sys</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-01-20T13:51:05.505855" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-01-20T13:51:05.505855" level="INFO">${options.binary_location} = C:/Application/chrome.exe</msg>
+<var>${options.binary_location}</var>
+<arg>${CHROME_BINARY}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-01-20T13:51:05.505855" elapsed="0.000000"/>
+</kw>
+<kw name="Set Variable If" owner="BuiltIn">
+<arg>'${CHROME_BINARY}' != '${None}'</arg>
+<arg>Set Property</arg>
+<arg>${options}</arg>
+<arg>binary_location</arg>
+<arg>${CHROME_BINARY}</arg>
+<doc>Sets variable based on the given condition.</doc>
+<status status="PASS" start="2026-01-20T13:51:05.505855" elapsed="0.000000"/>
+</kw>
+<if>
+<branch type="IF" condition="'${headless}' == 'True'">
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--headless</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="PASS" start="2026-01-20T13:51:05.505855" elapsed="0.000000"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--window-size\=1920,1080</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="PASS" start="2026-01-20T13:51:05.505855" elapsed="0.000000"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--disable-gpu</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="PASS" start="2026-01-20T13:51:05.505855" elapsed="0.015878"/>
+</kw>
+<status status="PASS" start="2026-01-20T13:51:05.505855" elapsed="0.015878"/>
+</branch>
+<status status="PASS" start="2026-01-20T13:51:05.505855" elapsed="0.015878"/>
+</if>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--no-sandbox</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="PASS" start="2026-01-20T13:51:05.521733" elapsed="0.000000"/>
+</kw>
+<kw name="Call Method" owner="BuiltIn">
+<arg>${options}</arg>
+<arg>add_argument</arg>
+<arg>--disable-dev-shm-usage</arg>
+<doc>Calls the named method of the given object with the provided arguments.</doc>
+<status status="PASS" start="2026-01-20T13:51:05.521733" elapsed="0.000000"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-01-20T13:51:05.521733" level="INFO">${service} = &lt;selenium.webdriver.chrome.service.Service object at 0x0000027308218D00&gt;</msg>
+<var>${service}</var>
+<arg>sys.modules['selenium.webdriver.chrome.service'].Service('${CHROME_DRIVER}')</arg>
+<arg>sys</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-01-20T13:51:05.521733" elapsed="0.000000"/>
+</kw>
+<kw name="Create Webdriver" owner="SeleniumLibrary">
+<msg time="2026-01-20T13:51:05.521733" level="INFO">Creating an instance of the Chrome WebDriver.</msg>
+<arg>${BROWSER}</arg>
+<arg>options=${options}</arg>
+<arg>service=${service}</arg>
+<doc>Creates an instance of Selenium WebDriver.</doc>
+<status status="PASS" start="2026-01-20T13:51:05.521733" elapsed="3.549482"/>
+</kw>
+<kw name="Go To" owner="SeleniumLibrary">
+<msg time="2026-01-20T13:51:09.073211" level="INFO">Opening url 'https://rimcentral5.rimsys.io'</msg>
+<arg>${url}</arg>
+<doc>Navigates the current browser window to the provided ``url``.</doc>
+<status status="PASS" start="2026-01-20T13:51:09.073211" elapsed="3.073459"/>
+</kw>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2026-01-20T13:51:12.146670" elapsed="0.120596"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-01-20T13:51:22.287831" level="INFO">Slept 10 seconds.</msg>
+<arg>${DEFAULT_TIMEOUT}</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-01-20T13:51:12.267266" elapsed="10.020565"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${AZURE_LOGIN_BUTTON}</arg>
+<arg>${MID_TIMEOUT}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-01-20T13:51:22.287831" elapsed="0.048046"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2026-01-20T13:51:22.335877" level="INFO">Clicking element 'xpath=//*[@alt="Login with Azure"]'.</msg>
+<arg>${AZURE_LOGIN_BUTTON}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2026-01-20T13:51:22.335877" elapsed="0.774080"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${LOGIN_EMAIL_INPUT}</arg>
+<arg>${MID_TIMEOUT}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-01-20T13:51:23.109957" elapsed="0.485175"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2026-01-20T13:51:23.596127" level="INFO">Typing text 'santosh.mangalapalli@rimsys.io' into text field 'xpath=//*[@name="loginfmt"]'.</msg>
+<arg>${LOGIN_EMAIL_INPUT}</arg>
+<arg>${username}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2026-01-20T13:51:23.596127" elapsed="0.139446"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${LOGIN_NEXT_BUTTON}</arg>
+<arg>${MID_TIMEOUT}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-01-20T13:51:23.735573" elapsed="0.027075"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2026-01-20T13:51:23.763643" level="INFO">Clicking element 'id=idSIButton9'.</msg>
+<arg>${LOGIN_NEXT_BUTTON}</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2026-01-20T13:51:23.763643" elapsed="0.074916"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${LOGIN_PASSWORD_INPUT}</arg>
+<arg>${MID_TIMEOUT}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-01-20T13:51:23.838559" elapsed="1.448732"/>
+</kw>
+<kw name="Input Password" owner="SeleniumLibrary">
+<msg time="2026-01-20T13:51:25.288336" level="INFO">Typing password into text field 'xpath=//*[@name="passwd"]'.</msg>
+<msg time="2026-01-20T13:51:25.332099" level="INFO">Temporally setting log level to: NONE</msg>
+<arg>${LOGIN_PASSWORD_INPUT}</arg>
+<arg>${password}</arg>
+<doc>Types the given password into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2026-01-20T13:51:25.287291" elapsed="0.086572"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>${LOGIN_SUBMIT_BUTTON}</arg>
+<arg>${MID_TIMEOUT}</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2026-01-20T13:51:25.373863" elapsed="0.022871"/>
+</kw>

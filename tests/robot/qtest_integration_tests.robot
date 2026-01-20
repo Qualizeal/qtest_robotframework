@@ -16,33 +16,41 @@ Suite Teardown    Finalize QTest Test Run
 Test Setup        Run Keywords    Read Env And Set Credentials    ${EXECDIR}${/}.env    
 ...    AND    Setup QTest Integration    AND    Log Test Start    
 ...    AND    Login To Application    ${url}    ${username}    ${password}
-Test Teardown     Report Test Result 
+Test Teardown   Run Keywords   Report Test Result   AND   Close All Browsers
 
 *** Variables ***
 ${QTEST_CONFIG}         ${EXECDIR}${/}config.json
-${TEST_CYCLE_NAME}        TestDemo
-${TEST_RUN_NAME}        Robot Framework Test Run -
-# @{TEST_CASE_NAME}        Validate that Admin user is able to navigate to the required page and search Label Aliases
+${TEST_CYCLE_NAME}       TestDemo
+${TEST_RUN_NAME}        Robot Framework Test Run - ${TEST_CYCLE_NAME}
 
 *** Test Cases ***
 Validate that Admin user is able to navigate to the required page and search Label Aliases
-    [Documentation]    Test login functionality with valid credentials
+    [Documentation]    Test functionality for Label Aliases with valid credentials
     [Tags]    login    smoke    critical
     Welcome Page Should Be Loaded
     Choose Client     Cardinal
     Open Settings and Label Aliases
     validate Label Aliases page
+
+    #validate Label Aliases page and search with no 404 error showing
     Enter Legal search criteria and validate results    legal
 
+
+
 Validate that Admin user is able to navigate to the required page and search Read-only Fields
-    [Documentation]    Test login functionality with valid credentials
+    [Documentation]    Test functionality for Read-only Fields with valid credentials
     [Tags]    login    smoke    critical
     Welcome Page Should Be Loaded
     Choose Client     Cardinal
-    # Open Settings and Readonly Aliases
-    # validate Readonly Aliases page
-    # Enter Read only criteria and validate results    read_only
+    Open Settings and Readonly Aliases
+    validate Readonly Aliases page
+
+    #validate Read only Aliases page and search with no 404 error showing
+    Enter Read only criteria and validate results    legal
     
+
+
+
 *** Keywords ***
 Welcome Page Should Be Loaded
     [Documentation]    Verify that the welcome page is loaded
@@ -79,6 +87,9 @@ Select Environment and client admin login
     ${STEP_LOGS}=    ADD STEP LOG TO QTEST    ${TEST_CASE_ID}    ${STEP_LOGS}    1    PASSED    ${PAGETITLE}    Expected ok    Step ran fine
     RETURN  ${PAGETITLE}
 Open Settings and Label Aliases
+    Sleep    ${DEFAULT_TIMEOUT}
+    Wait Until Element Is Visible    ${LASTACTIVITY_HEADER}    ${MAX_TIMEOUT}
+    Sleep    ${DEFAULT_TIMEOUT}
     Wait Until Element Is Visible    ${PROFILEBUTTON}    ${MAX_TIMEOUT}
     Sleep    ${DEFAULT_TIMEOUT}
     Scroll Element Into View    ${PROFILEBUTTON}
@@ -89,6 +100,9 @@ Open Settings and Label Aliases
     Click Element    ${SETTINGS_LINK}
 
 Open Settings and Readonly Aliases
+    Sleep    ${DEFAULT_TIMEOUT}
+    Wait Until Element Is Visible    ${LASTACTIVITY_HEADER}    ${MAX_TIMEOUT}
+    Sleep    ${DEFAULT_TIMEOUT}
     Wait Until Element Is Visible    ${PROFILEBUTTON}    ${MAX_TIMEOUT}
     Sleep    ${DEFAULT_TIMEOUT}
     Scroll Element Into View    ${PROFILEBUTTON}
@@ -104,22 +118,38 @@ validate Label Aliases page
     Wait Until Element Is Visible    ${LABEL_ALIASES_SEARCH_INPUT}        ${MAX_TIMEOUT}
 
 validate Readonly Aliases page
-    Wait Until Element Is Visible    ${LABEL_ALIASES_LINK}           ${MAX_TIMEOUT}
-    Click Element    ${LABEL_ALIASES_LINK}
+    Wait Until Element Is Visible    ${LABEL_READ_ONLY_FIELDS_LINK}           ${MAX_TIMEOUT}
+    Click Element    ${LABEL_READ_ONLY_FIELDS_LINK}
     Wait Until Element Is Visible    ${LABEL_ALIASES_SEARCH_INPUT}        ${MAX_TIMEOUT}
 Enter Legal search criteria and validate results
     [Arguments]    ${searchcriteria}
+    ${STEP_LOGS}=    ADD STEP LOG TO QTEST    ${TEST_CASE_ID}    ${STEP_LOGS}    2    PASSED    Settings page Loaded properly    Expected ok    Step ran fine
     Input Text    ${LABEL_ALIASES_SEARCH_INPUT}        ${searchcriteria}
-    ${STEP_LOGS}=    ADD STEP LOG TO QTEST    ${TEST_CASE_ID}    ${STEP_LOGS}    2    PASSED    PASSED    Expected ok    Step ran fine
     Press Keys    ${LABEL_ALIASES_SEARCH_INPUT}        ENTER
-    ${STEP_LOGS}=    ADD STEP LOG TO QTEST    ${TEST_CASE_ID}    ${STEP_LOGS}    3    PASSED    PASSED    Expected ok    Step ran fine
+    ${STEP_LOGS}=    ADD STEP LOG TO QTEST    ${TEST_CASE_ID}    ${STEP_LOGS}    3    PASSED    Search Result Loaded properly    Expected ok    Step ran fine
+    ${DATAavailable}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${LABEL_ALIASES_SEARCH_INPUT_RESULT}
+    ${Error404}=    Run Keyword And Return Status    Element Should Not Be Visible    ${PAGECONTAINS404}
+    # IF    $DATAavailable == 'True' AND $Error404 == 'True'
+    IF  "${DATAavailable}" == "True" and "${Error404}" == "True"
+        ${STEP_LOGS}=    ADD STEP LOG TO QTEST    ${TEST_CASE_ID}    ${STEP_LOGS}    4    PASSED    No 404    Expected ok    Step ran fine
+    ELSE
+        ${STEP_LOGS}=    ADD STEP LOG TO QTEST    ${TEST_CASE_ID}    ${STEP_LOGS}    4    FAILED    Error 404    Expected ok    Step ran fine
+    END
 
 Enter Read only criteria and validate results
     [Arguments]    ${searchcriteria}
+    ${STEP_LOGS}=    ADD STEP LOG TO QTEST    ${TEST_CASE_ID}    ${STEP_LOGS}    2    PASSED    Settings page Loaded properly    Expected ok    Step ran fine
     Input Text    ${LABEL_ALIASES_SEARCH_INPUT}        ${searchcriteria}
     Press Keys    ${LABEL_ALIASES_SEARCH_INPUT}        ENTER
-    ${STEP_LOGS}=    ADD STEP LOG TO QTEST    ${TEST_CASE_ID}    ${STEP_LOGS}    2    PASSED    PASSED    Expected ok    Step ran fine
-
+    ${STEP_LOGS}=    ADD STEP LOG TO QTEST    ${TEST_CASE_ID}    ${STEP_LOGS}    3    PASSED    Search Result Loaded properly    Expected ok    Step ran fine
+    ${DATAavailable}=    Run Keyword And Return Status    Wait Until Element Is Visible    ${LABEL_READ_ONLY_FIELDS_SEARCH_INPUT_RESULT}
+    ${Error404}=    Run Keyword And Return Status    Element Should Not Be Visible    ${PAGECONTAINS404}
+    
+    IF  "${DATAavailable}" == "True" and "${Error404}" == "True"
+        ${STEP_LOGS}=    ADD STEP LOG TO QTEST    ${TEST_CASE_ID}    ${STEP_LOGS}    4    PASSED    No 404    Expected ok    Step ran fine
+    ELSE
+        ${STEP_LOGS}=    ADD STEP LOG TO QTEST    ${TEST_CASE_ID}    ${STEP_LOGS}    4    FAILED    Error 404    Expected ok    Step ran fine
+    END
 Setup QTest Integration
     [Documentation]    Initialize QTest integration and create test run
     ${date}=    Get Current Date    result_format=%Y-%m-%d %H:%M
